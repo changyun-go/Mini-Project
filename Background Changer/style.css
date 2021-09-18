@@ -1,0 +1,24 @@
+body {
+			margin: 0;
+		}
+		p {
+			width: 100%;
+			margin: 200px 0px 300px 0px;
+			text-align: center;
+			font-size: 60px;
+			font-weight: bold;
+		}
+		button {
+			width: 140px;
+			height: 57px;
+			display: block;
+			margin: auto;
+			position: relative;
+      top: -300px;
+			text-align: center;
+			font-size: 22px;
+			background-color: grey;
+			border-radius: 7px;
+			border: 0;
+			outline: 0;
+		}
