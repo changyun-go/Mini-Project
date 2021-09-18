@@ -5,6 +5,9 @@
 		<title>Background Changer</title>
 	</head>
 	<style>
+		body {
+			margin: 0;
+		}
 		p {
 			width: 100%;
 			margin: 200px 0px 300px 0px;
@@ -22,20 +25,22 @@
 			text-align: center;
 			font-size: 22px;
 			background-color: grey;
-			text-decoration: none;
-			text-decoration-color: white;
 			border-radius: 7px;
 			border: 0;
 			outline: 0;
 		}
-		
-	
-	
 	</style>
 	<body>
-
+		<script type = "text/javascript">
+			function changer(){
+				let color = '#';
+				for(let i = 0; i < 6; i++){
+  				color += Math.floor(Math.random()*16).toString(16)
+				}
+				document.body.style.backgroundColor = color;
+			}
+		</script>
 		<p>HEX COLOR :#3474FF</p>
-	
-		<br><button>CLICK ME</button>
+		<br><button style = "color: white;" onclick="changer()">CLICK ME</button>
 	</body>
 </html>
