@@ -1,5 +1,3 @@
-# Background Changer
-
 ## 요구사항
 
 - 랜덤한 Hex color code를 생성하는 함수 작성하기
