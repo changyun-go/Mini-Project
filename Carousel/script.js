@@ -31,8 +31,6 @@ right_btn.addEventListener("click", function rightClick(){
 	main_img.src = imgs[i];
 });
 
-
-
 btn1.addEventListener("click", function img1(){
 	main_img.src = imgs[0];
 });
@@ -48,8 +46,3 @@ btn4.addEventListener("click", function img2(){
 btn5.addEventListener("click", function img2(){
 	main_img.src = imgs[4];
 });
-
-
-
-
-
