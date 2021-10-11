@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+#title{
+	background-color: red;
+	font-family: 'Josefin Sans', sans-serif;
+	text-align: center;
+	font-size: 70px;
+	height: 100px;
+	border-radius: 10px;
+}
+#start-btn{
+  appearance: none;
+	font-family: 'Josefin Sans', sans-serif;
+	display: block;
+	margin: 100px auto;
+	width: 200px;
+	height: 200px;
+	font-size: 40px;
+	border-radius: 100px;
+}
+#num_input{
+	visibility: hidden;
+	font-family: 'Josefin Sans', sans-serif;
+	display: block;
+	margin: 100px auto 50px;
+	width: 300px;
+	font-size: 60px;
+	border-radius: 10px;
+}
+#score-board{
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 40px;
+}
+.container{
+	display: flex;
+	flex-direction: row;
+}
+.item{
+	flex-basis: 50%;
+}
+

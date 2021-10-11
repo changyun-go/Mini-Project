@@ -9,11 +9,17 @@
 		<title>Number Baseball</title>
 	</head>
 	<body>
-		<h1>숫자야구</h1>
-		<br><button onclick="NumMaker()">START</button>
-		<input id="num_input" type="number" min="100" max="999" onkeypress="enter()">
+		<div id="title">⚾Number Baseball</div><br>
+		<div class="container">
+			<div class="item">
+				<button id="start-btn" onclick="NumMaker()">START</button><br>
+				<input id="num_input" type="number" onkeypress="enter()">
+			</div>
+			<div class="item">
+				<div id="score-board"></div>
+			</div>
+		</div>
 		
 		
-	
 		</body>
 </html>
