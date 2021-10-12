@@ -45,10 +45,10 @@ function enter(){
 				NumMaker();
 			}
 			else if(ball === 0 && strike === 0){
-				document.querySelector("#score-board").innerHTML += "<br><b>"+count+"회</b> "+"OUT "+MyNum;
+				document.querySelector("#score-board").innerHTML += "<br><b>"+count+"회</b> &nbsp;&nbsp;"+"OUT &nbsp;&nbsp;"+MyNum;
 			}
 			else{
-				document.querySelector("#score-board").innerHTML += "<br><b>"+count+"회</b> "+ball+"B   "+strike+"S "+MyNum;
+				document.querySelector("#score-board").innerHTML += "<br><b>"+count+"회</b> &nbsp;"+ball+"B   &nbsp;"+strike+"S &nbsp;"+MyNum;
 			}
 			count++;
 			if(count === 11){
