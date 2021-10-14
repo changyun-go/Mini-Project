@@ -4,6 +4,9 @@ let NumInput = document.querySelector("#num_input");
 let ball = 0;
 let strike = 0;
 let count = 1;
+let NewNum = 0;
+let i = 0;
+let j = 0;
 
 
 
@@ -14,8 +17,15 @@ function NumMaker(){
 	strike = 0;
 	document.querySelector("#score-board").textContent = null;
 	Number = Math.floor(Math.random() * 10).toString();
-	Number += Math.floor(Math.random() * 10).toString();
-	Number += Math.floor(Math.random() * 10).toString();
+	for(i = 0; i < 2; i++){
+		NewNum = Math.floor(Math.random() * 10).toString()
+		if(Number[i] !== NewNum && Number[i-1] !== NewNum){
+			Number += NewNum;
+		}
+		else{
+			i--;
+		}
+	}
 	document.querySelector("#num_input").style.visibility = "visible";
 	document.querySelector("#start-btn").textContent = "RESTART";
 	NumInput.value = null;
@@ -31,11 +41,11 @@ function enter(){
 			alert("세자리 숫자를 입력해주세요!");
 		}
 		else{
-			for(let i = 0; i < 3; i++){
-				if(Number[i] === MyNum[i]){
+			for(j = 0; j < 3; j++){
+				if(Number[j] === MyNum[j]){
 					strike++;
 				}
-				else if(Number.includes(MyNum[i])){
+				else if(Number.includes(MyNum[j])){
 					ball++;
 				}
 			}
