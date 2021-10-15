@@ -8,8 +8,6 @@ let NewNum = 0;
 let i = 0;
 let j = 0;
 
-
-
 function NumMaker(){
 	Number = 0;
 	count = 1;
@@ -29,7 +27,6 @@ function NumMaker(){
 	document.querySelector("#num_input").style.visibility = "visible";
 	document.querySelector("#start-btn").textContent = "RESTART";
 	NumInput.value = null;
-	console.log(Number);
 }
 
 function enter(){
@@ -65,8 +62,6 @@ function enter(){
 				confirm("LOSE😭\n다시 도전하시겠습니까?");
 				NumMaker();
 			}
-			console.log(strike);
-			console.log(ball);
 		}
 	}
 }
