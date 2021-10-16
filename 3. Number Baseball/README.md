@@ -13,5 +13,5 @@
 
 ## 실행 화면
 
-![](https://images.velog.io/images/nulbo/post/ba832f79-584c-45d3-96c1-dbae0adbcfbf/ezgif.com-gif-maker.gif)
+![](https://images.velog.io/images/nulbo/post/2774b44b-a7b8-4bf8-ae0d-dfc3ede36863/ezgif.com-gif-maker%20(1).gif)
 
