@@ -14,3 +14,5 @@
 ## 실행 화면
 
 ![](https://images.velog.io/images/nulbo/post/4d21cc19-4d8c-40e8-942f-fd6eb312bd41/ezgif.com-gif-maker%20(2).gif)
+
+- 링크 : https://changyun-go.github.io/Mini-Project/2.%20Carousel/ 
