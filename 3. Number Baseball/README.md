@@ -15,4 +15,4 @@
 
 ![](https://images.velog.io/images/nulbo/post/2774b44b-a7b8-4bf8-ae0d-dfc3ede36863/ezgif.com-gif-maker%20(1).gif)
 
-https://changyun-go.github.io/Mini-Project/3.%20Number%20Baseball/
+- 링크 : https://changyun-go.github.io/Mini-Project/3.%20Number%20Baseball/
