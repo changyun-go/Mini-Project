@@ -17,3 +17,6 @@ let firstDayNum = newDate.getDay() - date % 7 + 1;
 let firstDay = days[firstDayNum];
 
 console.log(firstDay);
+
+let table = document.querySelector("#table");
+table.rows[1].cells[3].textContent = 1;
