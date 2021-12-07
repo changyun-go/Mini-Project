@@ -11,3 +11,9 @@ document.querySelector("#week").textContent = week;
 document.querySelector("#date").textContent = date;
 document.querySelector("#month").textContent = month;
 document.querySelector("#year").textContent = year;
+
+let firstDayNum = newDate.getDay() - date % 7 + 1;
+
+let firstDay = days[firstDayNum];
+
+console.log(firstDay);
