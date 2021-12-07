@@ -12,11 +12,23 @@ document.querySelector("#date").textContent = date;
 document.querySelector("#month").textContent = month;
 document.querySelector("#year").textContent = year;
 
-let firstDayNum = newDate.getDay() - date % 7 + 1;
-
-let firstDay = days[firstDayNum];
-
-console.log(firstDay);
+let firstDay = newDate.getDay() - date % 7 + 1;
 
 let table = document.querySelector("#table");
-table.rows[1].cells[3].textContent = 1;
+
+let dateNum = 0;
+for(i = firstDay; i <= 6; i++){
+    dateNum++;
+    table.rows[1].cells[i].textContent = dateNum;
+}
+for(k = 2; k <= 6; k++){
+    for(j = 0; j <= 6; j++){
+        dateNum++;
+        table.rows[k].cells[j].textContent = dateNum;
+        if(dateNum === 31){
+            break;
+        }
+    }
+}
+
+
