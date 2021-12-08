@@ -8,3 +8,6 @@ table{
 td{
     width: 43px;
 }
+.container{
+    display: flex;
+}
