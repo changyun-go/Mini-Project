@@ -14,6 +14,21 @@ let table = document.querySelector("#table");
 let month = newDate.getMonth();
 selectMonth.textContent = months[month];
 
+selectWeek.textContent = week;
+selectDate.textContent = date;
+
+let lastDate = 0;
+let lastDay = 0;
+if(month === 3||month === 5||month === 8||month === 10){
+    lastDate = 30;
+}
+else if(month === 1){
+    lastDate = 28;
+}
+else{
+    lastDate = 31;
+}
+
 let year = newDate.getFullYear();
 selectYear.textContent = year;
 
@@ -45,32 +60,65 @@ function prev(){
     selectMonth.textContent = months[month];
     selectYear.textContent = year;
 
-    dateNum = 0;
-    firstDay = firstDay - 30 % 7;
-    let x = 0;
-    let y = 0;
-    if(firstDay < 0){
-        firstDay = firstDay + 6;
+    if(month === 3||month === 5||month === 8||month === 10){
+        lastDate = 30;
     }
-    for(i = 0; i < firstDay; i++){
+    else if(month === 1){
+        lastDate = 28;
+    }
+    else{
+        lastDate = 31;
+    }
+    console.log(lastDate);
+
+    dateNum = 0;
+    firstDay = firstDay - (lastDate - 28);
+    if(firstDay < 0){
+        firstDay = firstDay + 7;
+    }
+    for(let i = 0; i < firstDay; i++){
         table.rows[1].cells[i].textContent = null;
     }
-    for(i = firstDay; i <= 6; i++){
+    for(let i = firstDay; i <= 6; i++){
         dateNum++;
         table.rows[1].cells[i].textContent = dateNum;
     }
-    for(k = 2; k <= 6; k++){
-        for(j = 0; j <= 6; j++){
+    for(let i = 2; i <= 4; i++){
+        for(let j = 0; j <= 6; j++){
             dateNum++;
-            table.rows[k].cells[j].textContent = dateNum;
-            if(dateNum === 31){
-                x = k;
-                y = j;
-                break;
-            }
+            table.rows[i].cells[j].textContent = dateNum;
         }
-        for(let q = y; q <= 6; q++){
-            table.rows[x].cells[q].textContent = null;
+    }
+    lastDay = firstDay + (lastDate - 29);
+    console.log(lastDay);
+
+    if(lastDay > 6){
+        lastDay = lastDay - 7;
+        console.log(lastDay);
+
+        for(let i = 0; i <= 6; i++){
+            dateNum++;
+            table.rows[5].cells[i].textContent = dateNum;
+        }
+        for(let i = 0; i <= lastDay; i++){
+            dateNum++;
+            table.rows[6].cells[i].textContent = dateNum;
+        }
+        for(let i = lastDay + 1; i <= 6; i++){
+            table.rows[6].cells[i].textContent = null;
+        }
+    }
+    else{
+        for(let i = 0; i <= lastDay; i++){
+            dateNum++;
+            table.rows[5].cells[i].textContent = dateNum;
+        }
+        for(let i = lastDay + 1; i <= 6; i++){
+            dateNum++;
+            table.rows[5].cells[i].textContent = null;
+        }
+        for(let i = 0; i <= 6; i++){
+            table.rows[6].cells[i].textContent = null;
         }
     }
 }
@@ -86,42 +134,65 @@ function next(){
     selectMonth.textContent = months[month];
     selectYear.textContent = year;
 
-    dateNum = 0;
-    firstDay = firstDay + 30 % 7;
-    let x = 0;
-    let y = 0;
-    if(firstDay > 6){
-        firstDay = firstDay - 6;
+    if(month === 3||month === 5||month === 8||month === 10){
+        lastDate = 30;
     }
-    for(i = 0; i < firstDay; i++){
+    else if(month === 1){
+        lastDate = 28;
+    }
+    else{
+        lastDate = 31;
+    }
+    console.log(lastDate);
+
+    dateNum = 0;
+    firstDay = firstDay + (lastDate - 28);
+    if(firstDay > 6){
+        firstDay = firstDay - 7;
+    }
+    for(let i = 0; i < firstDay; i++){
         table.rows[1].cells[i].textContent = null;
     }
-    for(i = firstDay; i <= 6; i++){
+    for(let i = firstDay; i <= 6; i++){
         dateNum++;
         table.rows[1].cells[i].textContent = dateNum;
     }
-    for(k = 2; k <= 6; k++){
-        for(j = 0; j <= 6; j++){
+    for(let i = 2; i <= 4; i++){
+        for(let j = 0; j <= 6; j++){
             dateNum++;
-            table.rows[k].cells[j].textContent = dateNum;
-            if(dateNum === 31){
-                x = k;
-                y = j;
-                break;
-            }
+            table.rows[i].cells[j].textContent = dateNum;
         }
-        for(let q = y; q <= 6; q++){
-            table.rows[x].cells[q].textContent = null;
+    }
+    lastDay = firstDay + (lastDate - 29);
+    console.log(lastDay);
+
+    if(lastDay > 6){
+        lastDay = lastDay - 7;
+        console.log(lastDay);
+
+        for(let i = 0; i <= 6; i++){
+            dateNum++;
+            table.rows[5].cells[i].textContent = dateNum;
+        }
+        for(let i = 0; i <= lastDay; i++){
+            dateNum++;
+            table.rows[6].cells[i].textContent = dateNum;
+        }
+        for(let i = lastDay + 1; i <= 6; i++){
+            table.rows[6].cells[i].textContent = null;
+        }
+    }
+    else{
+        for(let i = 0; i <= lastDay; i++){
+            dateNum++;
+            table.rows[5].cells[i].textContent = dateNum;
+        }
+        for(let i = lastDay + 1; i <= 6; i++){
+            dateNum++;
+            table.rows[5].cells[i].textContent = null;
+        }
+        for(let i = 0; i <= 6; i++){
+            table.rows[6].cells[i].textContent = null;
         }
     }
 }
-
-selectWeek.textContent = week;
-selectDate.textContent = date;
-
-
-
-
-
-
-
