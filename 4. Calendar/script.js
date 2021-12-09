@@ -35,17 +35,55 @@ selectYear.textContent = year;
 let dateNum = 0;
 let firstDay = newDate.getDay() - date % 7 + 1;
 
+if(firstDay < 0){
+    firstDay = firstDay + 7;
+}
+else if(firstDay > 6){
+    firstDay = firstDay - 7;
+}
+for(let i = 0; i < firstDay; i++){
+    table.rows[1].cells[i].textContent = null;
+}
 for(let i = firstDay; i <= 6; i++){
     dateNum++;
     table.rows[1].cells[i].textContent = dateNum;
 }
-for(let k = 2; k <= 6; k++){
+for(let i = 2; i <= 4; i++){
     for(let j = 0; j <= 6; j++){
         dateNum++;
-        table.rows[k].cells[j].textContent = dateNum;
-        if(dateNum === 31){
-            break;
-        }
+        table.rows[i].cells[j].textContent = dateNum;
+    }
+}
+lastDay = firstDay + (lastDate - 29);
+console.log(lastDay);
+
+if(lastDay > 6){
+    lastDay = lastDay - 7;
+    console.log(lastDay);
+
+    for(let i = 0; i <= 6; i++){
+        dateNum++;
+        table.rows[5].cells[i].textContent = dateNum;
+    }
+    for(let i = 0; i <= lastDay; i++){
+        dateNum++;
+        table.rows[6].cells[i].textContent = dateNum;
+    }
+    for(let i = lastDay + 1; i <= 6; i++){
+        table.rows[6].cells[i].textContent = null;
+    }
+}
+else{
+    for(let i = 0; i <= lastDay; i++){
+        dateNum++;
+        table.rows[5].cells[i].textContent = dateNum;
+    }
+    for(let i = lastDay + 1; i <= 6; i++){
+        dateNum++;
+        table.rows[5].cells[i].textContent = null;
+    }
+    for(let i = 0; i <= 6; i++){
+        table.rows[6].cells[i].textContent = null;
     }
 }
 
@@ -69,12 +107,15 @@ function prev(){
     else{
         lastDate = 31;
     }
-    console.log(lastDate);
-
     dateNum = 0;
+    console.log(lastDay);
+    lastDay = firstDay - 1;
     firstDay = firstDay - (lastDate - 28);
     if(firstDay < 0){
         firstDay = firstDay + 7;
+    }
+    else if(firstDay > 6){
+        firstDay = firstDay - 7;
     }
     for(let i = 0; i < firstDay; i++){
         table.rows[1].cells[i].textContent = null;
@@ -91,7 +132,6 @@ function prev(){
     }
     lastDay = firstDay + (lastDate - 29);
     console.log(lastDay);
-
     if(lastDay > 6){
         lastDay = lastDay - 7;
         console.log(lastDay);
@@ -143,11 +183,13 @@ function next(){
     else{
         lastDate = 31;
     }
-    console.log(lastDate);
-
     dateNum = 0;
-    firstDay = firstDay + (lastDate - 28);
-    if(firstDay > 6){
+    console.log(lastDay);
+    firstDay = lastDay + 1;
+    if(firstDay < 0){
+        firstDay = firstDay + 7;
+    }
+    else if(firstDay > 6){
         firstDay = firstDay - 7;
     }
     for(let i = 0; i < firstDay; i++){
@@ -168,7 +210,6 @@ function next(){
 
     if(lastDay > 6){
         lastDay = lastDay - 7;
-        console.log(lastDay);
 
         for(let i = 0; i <= 6; i++){
             dateNum++;
