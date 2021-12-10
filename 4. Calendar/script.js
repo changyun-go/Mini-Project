@@ -95,7 +95,12 @@ function lastDateCheck(){
         lastDate = 30;
     }
     else if(month === 1){
-        lastDate = 28;
+        if(year % 4 === 0){
+            lastDate = 29;
+        }
+        else{
+            lastDate = 28;
+        }
     }
     else{
         lastDate = 31;
