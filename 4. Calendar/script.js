@@ -8,13 +8,34 @@ let selectWeek = document.querySelector("#week")
 let selectDate = document.querySelector("#date")
 let selectMonth = document.querySelector("#month")
 let selectYear = document.querySelector("#year")
-let table = document.querySelector("#table");
+let table = document.querySelector("table");
+let td = document.querySelector("td");
 let month = newDate.getMonth();
 let lastDate = 0;
 let lastDay = 0;
 let dateNum = 0;
 let firstDay = newDate.getDay() - date % 7 + 1;
 let year = newDate.getFullYear();
+let clickDay = 0;
+
+
+table.onclick = clickDate;
+
+function clickDate(){
+    if(event.target.nodeName == "TD"){ 
+        selectDate.textContent = event.target.textContent;
+        clickDay = firstDay + selectDate.textContent % 7 - 1;
+        if(clickDay < 0){
+            clickDay = clickDay + 7;
+        }
+        else if(clickDay > 6){
+            clickDay = clickDay - 7;
+        }
+        selectWeek.textContent = days[clickDay];
+    }
+
+}
+
 
 function dateMaker(){
     if(firstDay < 0){
@@ -36,6 +57,7 @@ function dateMaker(){
             table.rows[i].cells[j].textContent = dateNum;
         }
     }
+
     lastDay = firstDay + (lastDate - 29);
 
     if(lastDay > 6){
@@ -80,8 +102,9 @@ function lastDateCheck(){
     }
 }
 
-selectWeek.textContent = week;
+
 selectMonth.textContent = months[month];
+selectWeek.textContent = week;
 selectDate.textContent = date;
 selectYear.textContent = year;
 
