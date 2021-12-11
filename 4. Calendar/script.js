@@ -98,7 +98,7 @@ function dateMaker(){
             table.rows[6].cells[i].textContent = null;
         }
     }
-    if(month === newDate.getMonth()){
+    if(month === newDate.getMonth() && year === newDate.getFullYear()){
         today = table.rows[Math.ceil((date + firstDay) / 7)].cells[day];
         today.className = "today-circle";
     }
