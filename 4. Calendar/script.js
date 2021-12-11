@@ -1,28 +1,25 @@
-let newDate = new Date();
 const days = ["일", "월", "화", "수", "목", "금", "토"];
 const months = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
-
+let newDate = new Date();
+let year = newDate.getFullYear();
+let month = newDate.getMonth();
 let day = newDate.getDay();
-let week = days[newDate.getDay()];
+let week = days[day];
 let date = newDate.getDate();
+let selectYear = document.querySelector("#year")
+let selectMonth = document.querySelector("#month")
 let selectWeek = document.querySelector("#week")
 let selectDate = document.querySelector("#date")
-let selectMonth = document.querySelector("#month")
-let selectYear = document.querySelector("#year")
 let table = document.querySelector("table");
 let td = document.querySelector("td");
-let month = newDate.getMonth();
+let dateNum = 0;
+let firstDay = 0;
 let lastDate = 0;
 let lastDay = 0;
-let dateNum = 0;
-let firstDay = newDate.getDay() - date % 7 + 1;
-let year = newDate.getFullYear();
 let clickDay = 0;
 let today = 0;
 let preTarget = 0;
 let preTargetText = 0;
-
-table.onclick = clickDate;
 
 function clickDate(){
     if(event.target.nodeName == "TD" && event.target.textContent !== ""){
@@ -34,6 +31,7 @@ function clickDate(){
         }
         selectDate.textContent = event.target.textContent + "일";
         clickDay = firstDay + event.target.textContent % 7 - 1;
+
         if(clickDay < 0){
             clickDay = clickDay + 7;
         }
@@ -45,7 +43,6 @@ function clickDate(){
         preTargetText = event.target.textContent;
     }
 }
-
 
 function dateMaker(){
     if(firstDay < 0){
@@ -67,7 +64,6 @@ function dateMaker(){
             table.rows[i].cells[j].textContent = dateNum;
         }
     }
-
     lastDay = firstDay + (lastDate - 29);
 
     if(lastDay > 6){
@@ -107,7 +103,6 @@ function dateMaker(){
     }
     preTarget.className = "";
 }
-
 function lastDateCheck(){
     if(month === 3||month === 5||month === 8||month === 10){
         lastDate = 30;
@@ -124,7 +119,6 @@ function lastDateCheck(){
         lastDate = 31;
     }
 }
-
 function firstDayDisplay(){
     if(month !== newDate.getMonth()){
         selectWeek.textContent = days[firstDay] + "요일";
@@ -135,15 +129,6 @@ function firstDayDisplay(){
         selectDate.textContent = date + "일";
     }
 }
-
-
-selectMonth.textContent = months[month];
-selectWeek.textContent = week + "요일";
-selectDate.textContent = date + "일";
-selectYear.textContent = year + "년";
-
-lastDateCheck()
-dateMaker();
 
 function prev(){
     if(month === 0){
@@ -160,10 +145,10 @@ function prev(){
     dateNum = 0;
     lastDay = firstDay - 1;
     firstDay = firstDay - (lastDate - 28);
+
     dateMaker();
     firstDayDisplay();
 }
-
 function next(){
     if(month === 11){
         month = 0;
@@ -178,7 +163,18 @@ function next(){
     lastDateCheck()
     dateNum = 0;
     firstDay = lastDay + 1;
+
     dateMaker();
     firstDayDisplay();
 }
+selectYear.textContent = year + "년";
+selectMonth.textContent = months[month];
+selectWeek.textContent = week + "요일";
+selectDate.textContent = date + "일";
+firstDay = newDate.getDay() - date % 7 + 1;
+
+lastDateCheck()
+dateMaker();
+
+table.onclick = clickDate;
 

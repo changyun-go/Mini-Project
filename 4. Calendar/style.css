@@ -1,13 +1,23 @@
 body{
     margin: 0;
 }
+button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+    outline: 0;
+    background-color: white;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+th{
+    font-size: 17px;
+}
 td{
     width: 50px;
     height: 50px;
     font-size: 20px;
-}
-th{
-    font-size: 17px;
 }
 .container{
     display: flex;
@@ -51,13 +61,3 @@ th{
     border-style: solid;
     border-color: purple;
 }
-button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border: 0;
-    outline: 0;
-    background-color: white;
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
