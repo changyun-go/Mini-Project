@@ -20,15 +20,18 @@ let year = newDate.getFullYear();
 let clickDay = 0;
 let today = 0;
 let preTarget = 0;
+let preTargetText = 0;
 
 table.onclick = clickDate;
 
 function clickDate(){
-    if(event.target.nodeName == "TD" && event.target.textContent !== ""){ 
-        if(preTarget !== 0){
-            preTarget.style.color = "";
+    if(event.target.nodeName == "TD" && event.target.textContent !== ""){
+        if(preTarget !== 0 && preTargetText != date){
+            preTarget.className = "";
         }
-        event.target.style.color = "red";
+        if(event.target.textContent != date){
+            event.target.className = "click-circle";
+        }
         selectDate.textContent = event.target.textContent + "일";
         clickDay = firstDay + event.target.textContent % 7 - 1;
         if(clickDay < 0){
@@ -39,6 +42,7 @@ function clickDate(){
         }
         selectWeek.textContent = days[clickDay] + "요일";
         preTarget = event.target;
+        preTargetText = event.target.textContent;
     }
 }
 
@@ -96,14 +100,12 @@ function dateMaker(){
     }
     if(month === newDate.getMonth()){
         today = table.rows[Math.ceil((date + firstDay) / 7)].cells[day];
-        today.style.color = "red";
+        today.className = "today-circle";
     }
     else{
-        today.style.color = "";
+        today.className = "";
     }
-    if(preTarget !== 0){
-        preTarget.style.color = "";
-    }
+    preTarget.className = "";
 }
 
 function lastDateCheck(){

@@ -2,7 +2,9 @@ body{
     margin: 0;
 }
 td{
-    width: 43px;
+    width: 50px;
+    height: 50px;
+    ;
 }
 .container{
     display: flex;
@@ -17,11 +19,24 @@ td{
     width: 150px;
 }
 #week{
-    font-size: 20px;
+    font-size: 30px;
 }
 #date{
-    font-size: 40px;
+    font-size: 70px;
 }
 .top-bar{
     display: inline;
+}
+.today-circle{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+}
+.click-circle{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border-style: solid;
 }
