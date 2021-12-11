@@ -4,7 +4,10 @@ body{
 td{
     width: 50px;
     height: 50px;
-    ;
+    font-size: 20px;
+}
+th{
+    font-size: 17px;
 }
 .container{
     display: flex;
@@ -14,9 +17,13 @@ td{
 }
 .item{
     text-align: center;
+    font-size: 18px;
 }
 #today{
-    width: 150px;
+    width: 160px;
+    margin-right: 60px;
+    margin-bottom: 60px;
+    font-weight: bold;
 }
 #week{
     font-size: 30px;
@@ -26,17 +33,31 @@ td{
 }
 .top-bar{
     display: inline;
+    font-weight: bold;
 }
 .today-circle{
-    width: 40px;
-    height: 40px;
+    width: 43px;
+    height: 43px;
     border-radius: 50%;
-    background-color: red;
+    border-width: 3px;
+    background-color: purple;
     color: white;
 }
 .click-circle{
-    width: 40px;
-    height: 40px;
+    width: 43px;
+    height: 43px;
     border-radius: 50%;
+    border-width: 2px;
     border-style: solid;
+    border-color: purple;
 }
+button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+    outline: 0;
+    background-color: white;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
