@@ -1,13 +1,27 @@
-.title{
-    text-align: center;
-}
-table{
-    margin: auto;
-    text-align: center;
+body{
+    margin: 0;
 }
 td{
     width: 43px;
 }
 .container{
     display: flex;
+    align-items:center;
+    justify-content: center;
+    height: 100vh;
+}
+.item{
+    text-align: center;
+}
+#today{
+    width: 150px;
+}
+#week{
+    font-size: 20px;
+}
+#date{
+    font-size: 40px;
+}
+.top-bar{
+    display: inline;
 }
