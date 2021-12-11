@@ -120,7 +120,7 @@ function lastDateCheck(){
     }
 }
 function firstDayDisplay(){
-    if(month !== newDate.getMonth()){
+    if(month !== newDate.getMonth() || year !== newDate.getFullYear()){
         selectWeek.textContent = days[firstDay] + "요일";
         selectDate.textContent = 1 + "일";
     }
