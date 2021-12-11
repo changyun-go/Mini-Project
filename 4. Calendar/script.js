@@ -107,6 +107,17 @@ function lastDateCheck(){
     }
 }
 
+function firstDayDisplay(){
+    if(month !== newDate.getMonth()){
+        selectWeek.textContent = days[firstDay];
+        selectDate.textContent = 1;
+    }
+    else{
+        selectWeek.textContent = week;
+        selectDate.textContent = date;
+    }
+}
+
 
 selectMonth.textContent = months[month];
 selectWeek.textContent = week;
@@ -132,6 +143,7 @@ function prev(){
     lastDay = firstDay - 1;
     firstDay = firstDay - (lastDate - 28);
     dateMaker();
+    firstDayDisplay();
 }
 
 function next(){
@@ -149,5 +161,6 @@ function next(){
     dateNum = 0;
     firstDay = lastDay + 1;
     dateMaker();
+    firstDayDisplay();
 }
 
