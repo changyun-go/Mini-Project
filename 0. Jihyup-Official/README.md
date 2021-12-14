@@ -16,4 +16,3 @@ JiHyup이라는 친구를 가상의 배우로 놓고 만든 팬페이지입니�
 - 배우의 인스타그램의 게시물을 미리보기 할 수 있고, follow할 수 있습니다.
 - 배우의 사진을 카테고리별로 감상할 수 있습니다.
 ![image](https://user-images.githubusercontent.com/85783423/128004561-f1e0a640-bea6-4422-a6a7-504da3b7a274.png)
-
