@@ -23,10 +23,10 @@ let preTargetText = 0;
 
 function clickDate(){
     if(event.target.nodeName == "TD" && event.target.textContent !== ""){
-        if(preTarget !== 0 && preTargetText != date){
+        if(preTarget !== 0 && (preTargetText != date || month != newDate.getMonth())){
             preTarget.className = "";
         }
-        if(event.target.textContent != date){
+        if(event.target.textContent != date || newDate.getMonth() != month){
             event.target.className = "click-circle";
         }
         selectDate.textContent = event.target.textContent + "일";
