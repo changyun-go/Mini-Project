@@ -1,6 +1,9 @@
-const input = document.querySelector("#input");
+const input = document.querySelector("input");
+const body = document.querySelector("body")
 
 function enter(){
-    alert(input.value);
+    let a = document.createElement("div");
+    body.appendChild(a);
+    a.textContent = input.value;
     input.value = null;
 }
