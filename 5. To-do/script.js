@@ -1,10 +1,29 @@
 const input = document.querySelector("input");
-const body = document.querySelector("body");
-const label = document.querySelector("label");
+const todo = document.querySelector("#todo");
+let preEvent = 0;
 
 function enter(){
-    let a = document.createElement("label");
-    body.appendChild(a);
-    a.innerHTML = `<br> <input type='checkbox'> ${input.value}` // 템플릿 리터럴
+    const newList = document.createElement("li");
+    todo.appendChild(newList);
+    newList.innerHTML = `<br> <input type='checkbox'> <span class="list"> ${input.value} </span>`;
     input.value = null;
 }
+
+todo.ondblclick = function(){
+    if(event.target.tagName === "SPAN"){
+        event.target.innerHTML = `<input value=${event.target.textContent}}>`
+    }
+    preEvent = event.target;
+}
+
+todo.onkeypress = function (){
+    if(event.keyCode == 13){
+        preEvent.textContent = preEvent.children[0].value;
+    }
+}
+
+document.addEventListener("click", function(e){
+    if(preEvent.children[0] !== e.target){
+        preEvent.textContent = preEvent.children[0].value;
+    }
+})
