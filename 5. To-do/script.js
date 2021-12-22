@@ -5,7 +5,7 @@ let preEvent = 0;
 function enter(){
     const newList = document.createElement("li");
     todo.appendChild(newList);
-    newList.innerHTML = `<br> <input type='checkbox'> <span class="list"> ${input.value} </span>`;
+    newList.innerHTML = `<br> <input type='checkbox'> <span> ${input.value} </span> <button onClick='removeBtn()'>`;
     input.value = null;
 }
 
@@ -16,7 +16,7 @@ todo.ondblclick = function(){
     preEvent = event.target;
 }
 
-todo.onkeypress = function (){
+todo.onkeypress = function(){
     if(event.keyCode == 13){
         preEvent.textContent = preEvent.children[0].value;
     }
@@ -27,3 +27,7 @@ document.addEventListener("click", function(e){
         preEvent.textContent = preEvent.children[0].value;
     }
 })
+
+function removeBtn(){
+    event.target.parentNode.remove();
+}
