@@ -38,10 +38,30 @@ document.addEventListener("click", function(e){
 
 function removeBtn(){
     event.target.parentNode.remove();
-    listCount--;
+    if(event.target.parentNode.children[1] === false){
+        listCount--;
+    }
+    if(listCount < 0){
+        listCount = 0;
+    }
     countDisplay.textContent = listCount;
-    if(listCount === 0){
+    if(todo.childElementCount === 1){
         countDisplay.remove();
     }
+    console.log(todo.childElementCount);
 }
+
+todo.onclick = function(){
+    if(event.target.checked === true){
+        listCount--;
+        if(listCount < 0){
+            listCount = 0;
+        }
+    }
+    else if(event.target.checked === false){
+        listCount++;
+    }
+    countDisplay.textContent = listCount;
+}
+
 
