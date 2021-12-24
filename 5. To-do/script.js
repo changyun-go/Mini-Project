@@ -16,16 +16,33 @@ function enter(){
     listCount++;
     if(listCount === 1){
         countDisplay = document.createElement("div");
-        all = document.createElement("button");
+        all = document.createElement("input");
+        all.type = "radio";
         active = document.createElement("input");
         active.type = "radio";
-        completed = document.createElement("button");
+        completed = document.createElement("input");
+        completed.type = "radio";
     }
     todo.insertBefore(countDisplay, null);
     todo.insertBefore(all, null);
     todo.insertBefore(active, null);
     todo.insertBefore(completed, null);
     countDisplay.textContent = listCount;
+
+    newList.onclick = function(){
+        if(event.target.checked === true){
+            listCount--;
+            if(listCount < 0){
+                listCount = 0;
+            }
+        }
+        else if(event.target.checked === false){
+            listCount++;
+        }
+        console.log(event.target.checked);
+        console.log(listCount);
+        countDisplay.textContent = listCount;
+    }
 }
 
 todo.ondblclick = function(){
@@ -41,7 +58,7 @@ todo.onkeypress = function(){
     }
 }
 
-document.addEventListener("click", function(e){
+todo.addEventListener("click", function(e){
     if(preEvent.children[0] !== e.target){
         preEvent.textContent = preEvent.children[0].value;
     }
@@ -66,18 +83,6 @@ function removeBtn(){
     console.log(active);
 }
 
-todo.onclick = function(){
-    if(event.target.checked === true){
-        listCount--;
-        if(listCount < 0){
-            listCount = 0;
-        }
-    }
-    else if(event.target.checked === false){
-        listCount++;
-    }
-    countDisplay.textContent = listCount;
-}
 allDone.onclick = function(){
     let checkArr = document.querySelectorAll("input");
     let f = 0;
@@ -97,9 +102,12 @@ allDone.onclick = function(){
     countDisplay.textContent = listCount;
 }
 
-document.addEventListener("click", function(v){
-    if(v.target === active || active.checked === true){
-        const listArr = Array.from(document.querySelectorAll("li"));
+todo.addEventListener("click", toggle);
+document.addEventListener("keypress", toggle);
+
+function toggle(){
+    const listArr = Array.from(document.querySelectorAll("li"));
+    if(active.checked === true){
         function f(list){
             return list.children[1].checked === true;
         }
@@ -108,4 +116,13 @@ document.addEventListener("click", function(v){
             result[i].className = 'hide';
         }
     }
-});
+    if(completed.checked === true){
+        function f(list){
+            return list.children[1].checked === false;
+        }
+        let result = listArr.filter(f);
+        for(let i = 0; i < listArr.length; i++){
+            result[i].className = 'hide';
+        }
+    }
+}
