@@ -1,5 +1,6 @@
-const input = document.querySelector("input");
+const input = document.querySelector("#todo-input");
 const todo = document.querySelector("#todo");
+const allDone = document.querySelector("#all-done")
 let countDisplay = 0;
 let preEvent = 0;
 let listCount = 0;
@@ -63,5 +64,21 @@ todo.onclick = function(){
     }
     countDisplay.textContent = listCount;
 }
-
-
+allDone.onclick = function(){
+    let listArr = document.querySelectorAll("input");
+    let f = 0;
+    for(let i = 1; i < listArr.length; i++){
+        if(listArr[i].checked === false){
+            f++;
+            listArr[i].checked = true;
+            listCount--;
+        }
+    }
+    if(f === 0){
+        for(let i = 1; i < listArr.length; i++){
+        listArr[i].checked = false;
+        listCount++;
+        }
+    }
+    countDisplay.textContent = listCount;
+}
