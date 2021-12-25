@@ -27,19 +27,19 @@ function enter(){
     countDisplay.textContent = listCount;
 
     newList.onclick = function(){
-        if(event.target.checked === true){
+        console.log(event.target);
+        if(event.target.checked === true && event.target.type === 'checkbox'){
             listCount--;
             checkCount++;
             if(listCount < 0){
                 listCount = 0;
             }
         }
-        else if(event.target.checked === false){
+        else if(event.target.checked === false && event.target.type === 'checkbox'){
             listCount++;
             checkCount--;
         }
         countDisplay.textContent = listCount;
-        console.log(checkCount);
     }
 }
 
@@ -88,7 +88,6 @@ function removeBtn(){
 
 allDone.onclick = function(){
     let checkArr = document.querySelectorAll('input[type="checkbox"]');
-    console.log(checkArr);
     let f = 0;
     for(let i = 0; i < checkArr.length; i++){
         if(checkArr[i].checked === false){
