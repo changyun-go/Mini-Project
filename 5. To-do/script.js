@@ -87,9 +87,10 @@ function removeBtn(){
 }
 
 allDone.onclick = function(){
-    let checkArr = document.querySelectorAll("input");
+    let checkArr = document.querySelectorAll('input[type="checkbox"]');
+    console.log(checkArr);
     let f = 0;
-    for(let i = 1; i < checkArr.length; i++){
+    for(let i = 0; i < checkArr.length; i++){
         if(checkArr[i].checked === false){
             f++;
             checkArr[i].checked = true;
@@ -97,7 +98,7 @@ allDone.onclick = function(){
         }
     }
     if(f === 0){
-        for(let i = 1; i < checkArr.length; i++){
+        for(let i = 0; i < checkArr.length; i++){
         checkArr[i].checked = false;
         listCount++;
         }
