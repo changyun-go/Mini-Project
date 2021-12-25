@@ -9,10 +9,10 @@ all.type = "radio";
 all.checked = true;
 active.type = "radio";
 completed.type = "radio";
+const clearBtn = document.createElement("button");
 let preEvent = 0;
 let listCount = 0;
 let checkCount = 0;
-let clearBtn = 0;
 
 function enter(){
     const newList = document.createElement("li");
@@ -25,8 +25,6 @@ function enter(){
     todo.insertBefore(active, null);
     todo.insertBefore(completed, null);
     countDisplay.textContent = listCount;
-
-clearBtn = document.createElement("button");
 
     newList.onclick = function(){
         if(event.target.checked === true){
@@ -41,30 +39,9 @@ clearBtn = document.createElement("button");
             checkCount--;
         }
         countDisplay.textContent = listCount;
-        if(event.target.type === 'checkbox'){
-            if(checkCount > 0){
-                todo.insertBefore(clearBtn, null);
-            }
-            else{
-                clearBtn.remove();
-            }
-        }
-    }
-    clearBtn.onclick = function(){
-        const listArr = Array.from(document.querySelectorAll("li"));
-        function f(list){
-            return list.children[1].checked === true;
-        }
-        let result = listArr.filter(f);
-        for(let i = 0; i < listArr.length; i++){
-            result[i].remove();
-            checkCount = 0;
-            clearBtn.remove();
-        }
+        console.log(checkCount);
     }
 }
-
-
 
 todo.ondblclick = function(){
     if(event.target.tagName === "SPAN"){
@@ -177,6 +154,24 @@ function toggle(){
         let result = listArr.filter(f);
         for(let i = 0; i < listArr.length; i++){
             result[i].className = 'hide';
+        }
+    }
+    if(checkCount > 0){
+        todo.insertBefore(clearBtn, null);
+    }
+    else{
+        clearBtn.remove();
+    }
+    clearBtn.onclick = function(){
+        const listArr = Array.from(document.querySelectorAll("li"));
+        function f(list){
+            return list.children[1].checked === true;
+        }
+        let result = listArr.filter(f);
+        for(let i = 0; i < listArr.length; i++){
+            result[i].remove();
+            checkCount = 0;
+            clearBtn.remove();
         }
     }
 }
