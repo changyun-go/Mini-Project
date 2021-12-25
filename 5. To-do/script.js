@@ -7,6 +7,8 @@ let active = 0;
 let completed = 0;
 let preEvent = 0;
 let listCount = 0;
+let checkCount = 0;
+let clearBtn = 0;
 
 function enter(){
     const newList = document.createElement("li");
@@ -30,19 +32,47 @@ function enter(){
     todo.insertBefore(completed, null);
     countDisplay.textContent = listCount;
 
+clearBtn = document.createElement("button");
+
     newList.onclick = function(){
         if(event.target.checked === true){
             listCount--;
+            checkCount++;
             if(listCount < 0){
                 listCount = 0;
             }
         }
         else if(event.target.checked === false){
             listCount++;
+            checkCount--;
         }
         countDisplay.textContent = listCount;
+
+        console.log(checkCount);
+        if(event.target.type === 'checkbox'){
+            if(checkCount > 0){
+                todo.insertBefore(clearBtn, null);
+            }
+            else{
+                clearBtn.remove();
+            }
+        }
+    }
+    clearBtn.onclick = function(){
+        const listArr = Array.from(document.querySelectorAll("li"));
+        function f(list){
+            return list.children[1].checked === true;
+        }
+        let result = listArr.filter(f);
+        for(let i = 0; i < listArr.length; i++){
+            result[i].remove();
+            checkCount = 0;
+            clearBtn.remove();
+        }
     }
 }
+
+
 
 todo.ondblclick = function(){
     if(event.target.tagName === "SPAN"){
@@ -69,6 +99,9 @@ function removeBtn(){
     if(event.target.parentNode.children[1].checked === false){
         listCount--;
     }
+    else{
+        checkCount--;
+    }
     if(listCount < 0){
         listCount = 0;
     }
@@ -79,7 +112,9 @@ function removeBtn(){
         active.remove();
         completed.remove();
     }
-    console.log(active);
+    if(checkCount === 0){
+        clearBtn.remove();
+    }
 }
 
 allDone.onclick = function(){
