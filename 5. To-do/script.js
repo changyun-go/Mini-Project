@@ -18,6 +18,7 @@ function enter(){
         countDisplay = document.createElement("div");
         all = document.createElement("input");
         all.type = "radio";
+        all.checked = true;
         active = document.createElement("input");
         active.type = "radio";
         completed = document.createElement("input");
@@ -39,8 +40,6 @@ function enter(){
         else if(event.target.checked === false){
             listCount++;
         }
-        console.log(event.target.checked);
-        console.log(listCount);
         countDisplay.textContent = listCount;
     }
 }
@@ -107,7 +106,32 @@ document.addEventListener("keypress", toggle);
 
 function toggle(){
     const listArr = Array.from(document.querySelectorAll("li"));
+    all.onclick = function(){
+        all.checked = true;
+        active.checked = false;
+        completed.checked = false;
+    }
+    active.onclick = function(){
+        active.checked = true;
+        completed.checked = false;
+        all.checked = false;
+    }
+    completed.onclick = function(){
+        completed.checked = true;
+        all.checked = false;
+        active.checked = false;
+    }
+    if(all.checked === true){
+        active.checked = false;
+        completed.checked = false;
+        for(let i = 0; i < listArr.length; i++){
+            listArr[i].classList.remove('hide');
+        }
+    }
     if(active.checked === true){
+        for(let i = 0; i < listArr.length; i++){
+            listArr[i].classList.remove('hide');
+        }
         function f(list){
             return list.children[1].checked === true;
         }
@@ -117,6 +141,9 @@ function toggle(){
         }
     }
     if(completed.checked === true){
+        for(let i = 0; i < listArr.length; i++){
+            listArr[i].classList.remove('hide');
+        }
         function f(list){
             return list.children[1].checked === false;
         }
