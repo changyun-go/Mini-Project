@@ -1,10 +1,14 @@
 const input = document.querySelector("#todo-input");
 const todo = document.querySelector("#todo");
 const allDone = document.querySelector("#all-done")
-let countDisplay = 0;
-let all = 0;
-let active = 0;
-let completed = 0;
+const all = document.createElement("input");
+const countDisplay = document.createElement("div");
+const active = document.createElement("input");
+const completed = document.createElement("input");
+all.type = "radio";
+all.checked = true;
+active.type = "radio";
+completed.type = "radio";
 let preEvent = 0;
 let listCount = 0;
 let checkCount = 0;
@@ -16,16 +20,6 @@ function enter(){
     newList.innerHTML = `<br> <input type='checkbox'> <span> ${input.value} </span> <button onClick='removeBtn()'>`;
     input.value = null;
     listCount++;
-    if(listCount === 1){
-        countDisplay = document.createElement("div");
-        all = document.createElement("input");
-        all.type = "radio";
-        all.checked = true;
-        active = document.createElement("input");
-        active.type = "radio";
-        completed = document.createElement("input");
-        completed.type = "radio";
-    }
     todo.insertBefore(countDisplay, null);
     todo.insertBefore(all, null);
     todo.insertBefore(active, null);
@@ -47,8 +41,6 @@ clearBtn = document.createElement("button");
             checkCount--;
         }
         countDisplay.textContent = listCount;
-
-        console.log(checkCount);
         if(event.target.type === 'checkbox'){
             if(checkCount > 0){
                 todo.insertBefore(clearBtn, null);
