@@ -15,43 +15,46 @@ let listCount = 0;
 let checkCount = 0;
 
 function enter(){
-    const newList = document.createElement("li");
-    todo.appendChild(newList);
-    newList.innerHTML = `<br> <input type='checkbox'> <span> ${input.value} </span> <button onClick='removeBtn()'>`;
-    input.value = null;
-    listCount++;
-    todo.insertBefore(countDisplay, null);
-    todo.insertBefore(all, null);
-    todo.insertBefore(active, null);
-    todo.insertBefore(completed, null);
-    countDisplay.textContent = listCount;
-
-    newList.onclick = function(){
-        console.log(event.target);
-        if(event.target.checked === true && event.target.type === 'checkbox'){
-            listCount--;
-            checkCount++;
-            if(listCount < 0){
-                listCount = 0;
-            }
-        }
-        else if(event.target.checked === false && event.target.type === 'checkbox'){
-            listCount++;
-            checkCount--;
-        }
+    if((input.value).replace(/\s/g,"").length > 0){
+        const newList = document.createElement("li");
+        todo.appendChild(newList);
+        newList.innerHTML = `<br> <input type='checkbox'> <span> ${input.value} </span> <button onClick='removeBtn()'>`;
+        input.value = null;
+        listCount++;
+        todo.insertBefore(countDisplay, null);
+        todo.insertBefore(all, null);
+        todo.insertBefore(active, null);
+        todo.insertBefore(completed, null);
         countDisplay.textContent = listCount;
+
+        newList.onclick = function(){
+            console.log(event.target);
+            if(event.target.checked === true && event.target.type === 'checkbox'){
+                listCount--;
+                checkCount++;
+                if(listCount < 0){
+                    listCount = 0;
+                }
+            }
+            else if(event.target.checked === false && event.target.type === 'checkbox'){
+                listCount++;
+                checkCount--;
+            }
+            countDisplay.textContent = listCount;
+        }
     }
 }
 
 todo.ondblclick = function(){
     if(event.target.tagName === "SPAN"){
-        event.target.innerHTML = `<input value=${event.target.textContent}}>`
+        event.target.innerHTML = `<input value=${event.target.textContent}>`
     }
     preEvent = event.target;
+    console.log(preEvent);
 }
 
 todo.onkeypress = function(){
-    if(event.keyCode == 13){
+    if(event.keyCode === 13){
         preEvent.textContent = preEvent.children[0].value;
     }
 }
