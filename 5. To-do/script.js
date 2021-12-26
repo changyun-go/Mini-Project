@@ -28,7 +28,6 @@ function enter(){
         countDisplay.textContent = listCount;
 
         newList.onclick = function(){
-            console.log(event.target);
             if(event.target.checked === true && event.target.type === 'checkbox'){
                 listCount--;
                 checkCount++;
@@ -48,10 +47,18 @@ function enter(){
 todo.ondblclick = function(){
     if(event.target.tagName === "SPAN"){
         event.target.innerHTML = `<input value=${event.target.textContent}>`
+        preEvent = event.target;
     }
-    preEvent = event.target;
-    console.log(preEvent);
 }
+todo.addEventListener("touchstart", function(){
+    if(event.target.tagName === "SPAN"){
+        event.target.innerHTML = `<input value=${event.target.textContent}>`
+        preEvent = event.target;
+    }
+    if(preEvent.children[0] !== e.target){ 
+        preEvent.textContent = preEvent.children[0].value;
+    }
+})
 
 todo.onkeypress = function(){
     if(event.keyCode === 13){
