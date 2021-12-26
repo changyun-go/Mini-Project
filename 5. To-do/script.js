@@ -1,10 +1,11 @@
-const input = document.querySelector("#todo-input");
+const input = document.querySelector(".todo-input");
 const todo = document.querySelector("#todo");
-const allDone = document.querySelector("#all-done")
+const allDone = document.createElement("button")
 const all = document.createElement("input");
 const countDisplay = document.createElement("div");
 const active = document.createElement("input");
 const completed = document.createElement("input");
+const topMenu = document.createElement("div");
 all.type = "radio";
 all.checked = true;
 active.type = "radio";
@@ -17,15 +18,20 @@ let checkCount = 0;
 function enter(){
     if((input.value).replace(/\s/g,"").length > 0){
         const newList = document.createElement("li");
+        newList.innerHTML = `<input type='checkbox'> <span> ${input.value} </span> <button onClick='removeBtn()' id='remove-btn'>`;
         todo.appendChild(newList);
-        newList.innerHTML = `<br> <input type='checkbox'> <span> ${input.value} </span> <button onClick='removeBtn()'>`;
         input.value = null;
         listCount++;
+        todo.insertBefore(topMenu, todo.firstChild);
+        topMenu.appendChild(allDone);
+        allDone.id = "all-done";
+        topMenu.appendChild(all);
+        topMenu.appendChild(active);
+        topMenu.appendChild(completed);
         todo.insertBefore(countDisplay, null);
-        todo.insertBefore(all, null);
-        todo.insertBefore(active, null);
-        todo.insertBefore(completed, null);
-        countDisplay.textContent = listCount;
+        countDisplay.id = "count-display";
+        topMenu.id = "top-menu";
+        countDisplay.textContent = `남은 할 일 ${listCount}개`;
 
         newList.onclick = function(){
             if(event.target.checked === true && event.target.type === 'checkbox'){
@@ -39,14 +45,14 @@ function enter(){
                 listCount++;
                 checkCount--;
             }
-            countDisplay.textContent = listCount;
+            countDisplay.textContent = `남은 할 일 ${listCount}개`;
         }
     }
 }
 
 todo.ondblclick = function(){
     if(event.target.tagName === "SPAN"){
-        event.target.innerHTML = `<input value=${event.target.textContent}>`
+        event.target.innerHTML = `<input class="change-text" value=${event.target.textContent}>`
         preEvent = event.target;
     }
 }
@@ -83,14 +89,11 @@ function changeText(){
         }
         preEvent.parentElement.remove();
         preEvent.remove();
-        console.log(listCount);
-        console.log(preEvent);
-
     }
     else{
         preEvent.textContent = preEvent.children[0].value;
     }
-    countDisplay.textContent = listCount;
+    countDisplay.textContent = `남은 할 일 ${listCount}개`;
     toggleRemove();
 }
 
@@ -103,12 +106,12 @@ function removeBtn(){
     else{
         checkCount--;
     }
-    countDisplay.textContent = listCount;
+    countDisplay.textContent = `남은 할 일 ${listCount}개`;
     toggleRemove();
 }
 
 function toggleRemove(){
-    if(todo.childElementCount === 4){
+    if(listCount === 0 && checkCount === 0){
         countDisplay.remove();
         all.remove();
         active.remove();
@@ -127,15 +130,18 @@ allDone.onclick = function(){
             f++;
             checkArr[i].checked = true;
             listCount--;
+            checkCount++;
         }
     }
     if(f === 0){
         for(let i = 0; i < checkArr.length; i++){
         checkArr[i].checked = false;
         listCount++;
+        checkCount--;
         }
     }
-    countDisplay.textContent = listCount;
+    toggle();
+    countDisplay.textContent = `남은 할 일 ${listCount}개`;
 }
 
 todo.addEventListener("click", toggle);
@@ -170,11 +176,11 @@ function toggle(){
             listArr[i].classList.remove('hide');
         }
         function f(list){
-            return list.children[1].checked === true;
+            return list.children[0].checked === true;
         }
         let result = listArr.filter(f);
         for(let i = 0; i < listArr.length; i++){
-            result[i].className = 'hide';
+            result[i].classList.add('hide');
         }
     }
     if(completed.checked === true){
@@ -182,11 +188,11 @@ function toggle(){
             listArr[i].classList.remove('hide');
         }
         function f(list){
-            return list.children[1].checked === false;
+            return list.children[0].checked === false;
         }
         let result = listArr.filter(f);
         for(let i = 0; i < listArr.length; i++){
-            result[i].className = 'hide';
+            result[i].classList.add('hide');
         }
     }
     if(checkCount > 0){
@@ -198,7 +204,7 @@ function toggle(){
     clearBtn.onclick = function(){
         const listArr = Array.from(document.querySelectorAll("li"));
         function f(list){
-            return list.children[1].checked === true;
+            return list.children[0].checked === true;
         }
         let result = listArr.filter(f);
         for(let i = 0; i < listArr.length; i++){
