@@ -50,27 +50,49 @@ todo.ondblclick = function(){
         preEvent = event.target;
     }
 }
+
+todo.onkeypress = function(){
+    if(event.keyCode === 13){
+        changeText();
+    }
+}
+
+todo.addEventListener("click", function(e){
+    if(preEvent.children[0] !== e.target){
+        changeText();
+    }
+})
+
 todo.addEventListener("touchstart", function(){
     if(event.target.tagName === "SPAN"){
         event.target.innerHTML = `<input value=${event.target.textContent}>`
         preEvent = event.target;
     }
     if(preEvent.children[0] !== e.target){ 
-        preEvent.textContent = preEvent.children[0].value;
+        changeText();
     }
 })
 
-todo.onkeypress = function(){
-    if(event.keyCode === 13){
+function changeText(){
+    if((preEvent.children[0].value).replace(/\s/g,"").length === 0){
+        if(preEvent.parentElement.children[1].checked === false){
+            listCount--;
+        }
+        else{
+            checkCount--;
+        }
+        preEvent.parentElement.remove();
+        preEvent.remove();
+        console.log(listCount);
+        console.log(preEvent);
+
+    }
+    else{
         preEvent.textContent = preEvent.children[0].value;
     }
+    countDisplay.textContent = listCount;
+    toggleRemove();
 }
-
-todo.addEventListener("click", function(e){
-    if(preEvent.children[0] !== e.target){
-        preEvent.textContent = preEvent.children[0].value;
-    }
-})
 
 
 function removeBtn(){
@@ -81,10 +103,11 @@ function removeBtn(){
     else{
         checkCount--;
     }
-    if(listCount < 0){
-        listCount = 0;
-    }
     countDisplay.textContent = listCount;
+    toggleRemove();
+}
+
+function toggleRemove(){
     if(todo.childElementCount === 4){
         countDisplay.remove();
         all.remove();
