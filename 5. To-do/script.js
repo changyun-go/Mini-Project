@@ -1,3 +1,4 @@
+const html = document.querySelector("html");
 const input = document.querySelector(".todo-input");
 const todo = document.querySelector("#todo");
 const allDone = document.createElement("button")
@@ -11,6 +12,8 @@ all.checked = true;
 active.type = "radio";
 completed.type = "radio";
 const clearBtn = document.createElement("button");
+clearBtn.textContent = "Clear";
+clearBtn.id = "clear-btn";
 let preEvent = 0;
 let listCount = 0;
 let checkCount = 0;
@@ -18,16 +21,20 @@ let checkCount = 0;
 function enter(){
     if((input.value).replace(/\s/g,"").length > 0){
         const newList = document.createElement("li");
-        newList.innerHTML = `<input type='checkbox'> <span> ${input.value} </span> <button onClick='removeBtn()' id='remove-btn'>`;
+        newList.innerHTML = `<input type='checkbox'> <span> ${input.value} </span> <button onClick='removeBtn()' id='remove-btn'>🗑️</button>`;
         todo.appendChild(newList);
         input.value = null;
         listCount++;
         todo.insertBefore(topMenu, todo.firstChild);
         topMenu.appendChild(allDone);
         allDone.id = "all-done";
+        allDone.textContent = "All";
         topMenu.appendChild(all);
+        all.id = "all";
         topMenu.appendChild(active);
+        active.id = "active";
         topMenu.appendChild(completed);
+        completed.id = "completed";
         todo.insertBefore(countDisplay, null);
         countDisplay.id = "count-display";
         topMenu.id = "top-menu";
@@ -63,15 +70,15 @@ todo.onkeypress = function(){
     }
 }
 
-todo.addEventListener("click", function(e){
+html.addEventListener("click", function(e){
     if(preEvent.children[0] !== e.target){
         changeText();
     }
 })
 
-todo.addEventListener("touchstart", function(){
+html.addEventListener("touchstart", function(){
     if(event.target.tagName === "SPAN"){
-        event.target.innerHTML = `<input value=${event.target.textContent}>`
+        event.target.innerHTML = `<input class="change-text" value=${event.target.textContent}>`
         preEvent = event.target;
     }
     if(preEvent.children[0] !== e.target){ 
@@ -81,7 +88,7 @@ todo.addEventListener("touchstart", function(){
 
 function changeText(){
     if((preEvent.children[0].value).replace(/\s/g,"").length === 0){
-        if(preEvent.parentElement.children[1].checked === false){
+        if(preEvent.parentElement.children[0].checked === false){
             listCount--;
         }
         else{
@@ -99,8 +106,8 @@ function changeText(){
 
 
 function removeBtn(){
-    event.target.parentNode.remove();
-    if(event.target.parentNode.children[1].checked === false){
+    event.target.parentElement.remove();
+    if(event.target.parentElement.children[0].checked === false){
         listCount--;
     }
     else{
@@ -147,6 +154,11 @@ allDone.onclick = function(){
 todo.addEventListener("click", toggle);
 document.addEventListener("keypress", toggle);
 
+html.addEventListener("click", function(e){
+    if(input !== e.target){
+        enter();
+    }
+})
 function toggle(){
     const listArr = Array.from(document.querySelectorAll("li"));
     all.onclick = function(){
