@@ -1,155 +1,163 @@
 body{
     width: 1000px;
+    height: 545px;
     margin: 0px auto;
     background: linear-gradient(lightskyblue 50%, white 50%);
-    height: 545px;
     background-repeat: no-repeat;
+}
+#title{
+    margin: 50px 0px 20px 0px;
+    color: white;
+    font-weight: bolder;
+    font-style:normal;
+    font-size: 70px;
+    text-align: center;
 }
 li{
     list-style: none;
     width: 800px;
     height: 90px;
-    font-size: 35px;
-    border-bottom: grey 2px solid;
     margin: 0px 100px 0px 100px;
-}
-.todo-input{
-    width: 750px;
-    height: 80px;
+    border-bottom: grey 2px solid;
     font-size: 35px;
-    margin: 0px 100px;
-    border: 20px;
-    padding: 0px 25px 0px 25px;
 }
-.hide{
-    display: none;
+span{
+    vertical-align: 15%;
 }
-#title{
-    font-size: 70px;
-    text-align: center;
-    margin: 50px 0px 20px 0px;
-    color: white;
-    font-weight: bolder;
-    font-style:normal;
+button{
+    width: 40px;
+    height: 20px;
 }
 input[type="checkbox"]{
     display: inline-block;
-    cursor: pointer;
     width: 45px;
     height: 45px;
     margin: 22px 10px 0px 15px;
     border: 2px solid black;
     border-radius: 25px;
+    cursor: pointer;
 }
 input[type="checkbox"]:checked{
     display: inline-block;
-    cursor: pointer;
     width: 45px;
     height: 45px;
     margin: 22px 10px 0px 15px;
     border: 2px solid black;
     border-radius: 25px;
+    cursor: pointer;
 }
 input[type="radio"]{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background-color: white;
     width: 50px;
     height: 25px;
     margin-left: 10px;
     margin-right: 0px;
-    border-radius: 3px;
     padding-top: 2.5px;
+    border-radius: 3px;
+    background-color: white;
 }
 input[type="radio"]:checked{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background-color: white;
     width: 50px;
     height: 25px;
+    padding-top: 2.5px;
     margin-left: 10px;
     margin-right: 0px;
     border-radius: 3px;
     background-color: steelblue;
     color: white;
-    padding-top: 2.5px;
 }
+.todo-input{
+    width: 750px;
+    height: 80px;
+    padding: 0px 25px 0px 25px;
+    margin: 0px 100px;
+    border: 20px;
+    font-size: 35px;
+}
+.hide{
+    display: none;
+}
+
+
 #all:after{
-    content: "   전체";
     white-space: pre;
+    content: "   전체";
 }
 #active:after{
-    content: "   진행";
     white-space: pre;
+    content: "   진행";
 }
 #completed:after{
-    content: "   완료";
     white-space: pre;
+    content: "   완료";
 }
 #count-display{
     display: inline-block;
-    font-size: 20px;
     margin-top: 18px;
     margin-left: 100px;
     margin-right: 620px;
+    font-size: 20px;
 }
 #all-done{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border: 0;
-    padding: 0;
-    background-color: white;
-    color: black;
-    font-size: 17px;
     width: 50px;
     height: 25px;
+    padding: 0;
     margin-right: 570px;
+    background-color: white;
+    border: 0;
     border-radius: 3px;
+    color: black;
+    font-size: 17px;
     vertical-align:-19%;
 }
 #all-done:active{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border: 0;
-    padding: 0;
-    font-size: 17px;
     width: 50px;
     height: 25px;
+    padding: 0;
+    border: 0;
     border-radius: 3px;
-    vertical-align:-19%;
     background-color: steelblue;
     color: white;
+    font-size: 17px;
+    vertical-align:-19%;
 }
 #clear-btn{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border: 0px ;
+    width: 50px;
+    height: 25px;
     padding: 0;
+    border: 0px;
+    border-radius: 3px;
     background-color: whitesmoke;
     color: black;
     font-size: 15px;
-    width: 50px;
-    height: 25px;
-    border-radius: 3px;
 }
 #clear-btn:active{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border: 0px ;
-    padding: 0;
-    background-color: grey;
-    color: white;
-    font-size: 15px;
     width: 50px;
     height: 25px;
     margin-right: 10px;
+    padding: 0;
+    border: 0px;
     border-radius: 3px;
+    background-color: grey;
+    color: white;
+    font-size: 15px;
 }
 #remove-btn{
     -webkit-appearance: none;
@@ -161,16 +169,13 @@ input[type="radio"]:checked{
     position: absolute;
     left: 830px;
     margin-top: 15px;
+    margin-top: 27px; 
+    padding: 0;
+    border: 0;
     font-size: 27px;
     background-color: white;
-    border: 0;
-    padding: 0;
-    margin-top: 27px; 
 }
-button{
-    width: 40px;
-    height: 20px;
-}
+
 #top-menu{
     margin: 10px 100px 30px 100px;
 }
@@ -178,14 +183,12 @@ button{
     display: inline-block;
     width: 630px;
     height: 50px;
-    font-size: 40px;
     padding: 0;
     margin-top: 3px;
     margin-bottom: 3px;
+    font-size: 40px;
 }
-span{
-    vertical-align: 15%;
-}
+
 #todo{
     position: relative;
 }

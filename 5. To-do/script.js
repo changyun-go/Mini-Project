@@ -1,24 +1,25 @@
 const html = document.querySelector("html");
 const input = document.querySelector(".todo-input");
 const todo = document.querySelector("#todo");
+const topMenu = document.createElement("div");
 const allDone = document.createElement("button")
 const all = document.createElement("input");
-const countDisplay = document.createElement("div");
-const active = document.createElement("input");
-const completed = document.createElement("input");
-const topMenu = document.createElement("div");
 all.type = "radio";
 all.checked = true;
+const active = document.createElement("input");
 active.type = "radio";
+const completed = document.createElement("input");
 completed.type = "radio";
+const countDisplay = document.createElement("div");
 const clearBtn = document.createElement("button");
-clearBtn.textContent = "Clear";
 clearBtn.id = "clear-btn";
+clearBtn.textContent = "Clear";
+
 let preEvent = 0;
 let listCount = 0;
 let checkCount = 0;
 
-function enter(){
+function submit(){
     if((input.value).replace(/\s/g,"").length > 0){
         const newList = document.createElement("li");
         newList.innerHTML = `<input type='checkbox'> <span> ${input.value} </span> <button onClick='removeBtn()' id='remove-btn'>🗑️</button>`;
@@ -152,12 +153,12 @@ allDone.onclick = function(){
     countDisplay.textContent = `남은 할 일 ${listCount}개`;
 }
 
-todo.addEventListener("click", toggle);
 document.addEventListener("keypress", toggle);
 
 html.addEventListener("click", function(e){
     if(input !== e.target){
-        enter();
+        submit();
+        toggle();
     }
 })
 function toggle(){
