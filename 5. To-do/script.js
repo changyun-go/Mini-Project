@@ -120,6 +120,7 @@ function removeBtn(){
 function toggleRemove(){
     if(listCount === 0 && checkCount === 0){
         countDisplay.remove();
+        allDone.remove();
         all.remove();
         active.remove();
         completed.remove();
