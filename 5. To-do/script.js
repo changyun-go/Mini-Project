@@ -22,7 +22,7 @@ const clearBtn = document.createElement("button");
 clearBtn.id = "clear-btn";
 clearBtn.textContent = "Clear";
 
-let preEvent = 0;
+let revisions = 0;
 let listCount = 0;
 let checkCount = 0;
 
@@ -42,69 +42,32 @@ function submit(){
         todo.insertBefore(countDisplay, null);
         countDisplay.textContent = `남은 할 일 ${listCount}개`;
         newList.onclick = function(){
-            if(event.target.checked === true && event.target.type === 'checkbox'){
+            if(event.target.type === 'checkbox' && event.target.checked === true){
                 listCount--;
                 checkCount++;
                 if(listCount < 0){
                     listCount = 0;
                 }
             }
-            else if(event.target.checked === false && event.target.type === 'checkbox'){
+            else if(event.target.type === 'checkbox' && event.target.checked === false){
                 listCount++;
                 checkCount--;
             }
             countDisplay.textContent = `남은 할 일 ${listCount}개`;
         }
     }
+    toggle();
 }
 
-todo.ondblclick = function(){
-    if(event.target.tagName === "SPAN"){
-        event.target.innerHTML = `<input class="change-text" value=${event.target.textContent}>`
-        preEvent = event.target;
+function remover(){
+    if(listCount === 0 && checkCount === 0){
+        topMenu.remove();
+        countDisplay.remove();
+    }
+    if(checkCount === 0){
+        clearBtn.remove();
     }
 }
-
-todo.onkeypress = function(){
-    if(event.keyCode === 13){
-        changeText();
-    }
-}
-
-html.addEventListener("click", function(e){
-    if(preEvent.children[0] !== e.target){
-        changeText();
-    }
-})
-
-html.addEventListener("touchstart", function(){
-    if(event.target.tagName === "SPAN"){
-        event.target.innerHTML = `<input class="change-text" value=${event.target.textContent}>`
-        preEvent = event.target;
-    }
-    if(preEvent.children[0] !== e.target){ 
-        changeText();
-    }
-})
-
-function changeText(){
-    if((preEvent.children[0].value).replace(/\s/g,"").length === 0){
-        if(preEvent.parentElement.children[0].checked === false){
-            listCount--;
-        }
-        else{
-            checkCount--;
-        }
-        preEvent.parentElement.remove();
-        preEvent.remove();
-    }
-    else{
-        preEvent.textContent = preEvent.children[0].value;
-    }
-    countDisplay.textContent = `남은 할 일 ${listCount}개`;
-    remover();
-}
-
 
 function removeBtn(){
     event.target.parentElement.remove();
@@ -118,15 +81,11 @@ function removeBtn(){
     remover();
 }
 
-function remover(){
-    if(listCount === 0 && checkCount === 0){
-        topMenu.remove();
-        countDisplay.remove();
+html.addEventListener("click", function(){
+    if(input !== event.target){
+        submit();
     }
-    if(checkCount === 0){
-        clearBtn.remove();
-    }
-}
+});
 
 allDone.onclick = function(){
     let checkArr = document.querySelectorAll('input[type="checkbox"]');
@@ -150,16 +109,72 @@ allDone.onclick = function(){
     countDisplay.textContent = `남은 할 일 ${listCount}개`;
 }
 
-document.addEventListener("keypress", toggle);
+function edit(){
+    if(event.target.tagName === "SPAN"){
+        event.target.innerHTML = `<input class="change-text" value=${event.target.textContent}>`
+        revisions = event.target;
+        html.addEventListener("click", function(){
+            if(revisions.children[0] !== event.target){
+                revise();
+            }
+        });
+    }
+}
 
-html.addEventListener("click", function(e){
-    if(input !== e.target){
-        submit();
+function revise(){
+    if((revisions.children[0].value).replace(/\s/g,"").length === 0){
+        if(revisions.parentElement.children[0].checked === false){
+            listCount--;
+        }
+        else{
+            checkCount--;
+        }
+        revisions.parentElement.remove();
+        revisions.remove();
+    }
+    else{
+        revisions.textContent = revisions.children[0].value;
+    }
+    countDisplay.textContent = `남은 할 일 ${listCount}개`;
+    remover();
+    toggle();
+}
+
+html.ondblclick = function(){
+    edit();
+}
+
+html.onkeypress = function(){
+    if(event.keyCode === 13){
+        revise();
         toggle();
     }
-})
+}
+
+html.addEventListener("touchstart", function(){
+    edit();
+});
+
 function toggle(){
     const listArr = Array.from(document.querySelectorAll("li"));
+    if(checkCount > 0){
+        todo.insertBefore(clearBtn, null);
+    }
+    else{
+        clearBtn.remove();
+    }
+    clearBtn.onclick = function(){
+        function f(list){
+            return list.children[0].checked === true;
+        }
+        let result = listArr.filter(f);
+        for(let i = 0; i < listArr.length; i++){
+            result[i].remove();
+            clearBtn.remove();
+            checkCount = 0;
+        }
+        remover();
+    }
     all.onclick = function(){
         all.checked = true;
         active.checked = false;
@@ -205,24 +220,5 @@ function toggle(){
         for(let i = 0; i < listArr.length; i++){
             result[i].classList.add('hide');
         }
-    }
-    if(checkCount > 0){
-        todo.insertBefore(clearBtn, null);
-    }
-    else{
-        clearBtn.remove();
-    }
-    clearBtn.onclick = function(){
-        const listArr = Array.from(document.querySelectorAll("li"));
-        function f(list){
-            return list.children[0].checked === true;
-        }
-        let result = listArr.filter(f);
-        for(let i = 0; i < listArr.length; i++){
-            result[i].remove();
-            clearBtn.remove();
-        }
-        checkCount = 0;
-        remover();
     }
 }
