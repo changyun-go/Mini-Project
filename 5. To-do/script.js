@@ -2,15 +2,22 @@ const html = document.querySelector("html");
 const input = document.querySelector(".todo-input");
 const todo = document.querySelector("#todo");
 const topMenu = document.createElement("div");
+topMenu.id = "top-menu";
 const allDone = document.createElement("button")
+allDone.id = "all-done";
+allDone.textContent = "All";
 const all = document.createElement("input");
 all.type = "radio";
 all.checked = true;
+all.id = "all";
 const active = document.createElement("input");
 active.type = "radio";
+active.id = "active";
 const completed = document.createElement("input");
 completed.type = "radio";
+completed.id = "completed";
 const countDisplay = document.createElement("div");
+countDisplay.id = "count-display";
 const clearBtn = document.createElement("button");
 clearBtn.id = "clear-btn";
 clearBtn.textContent = "Clear";
@@ -18,6 +25,11 @@ clearBtn.textContent = "Clear";
 let preEvent = 0;
 let listCount = 0;
 let checkCount = 0;
+
+topMenu.appendChild(allDone);
+topMenu.appendChild(all);
+topMenu.appendChild(active);
+topMenu.appendChild(completed);
 
 function submit(){
     if((input.value).replace(/\s/g,"").length > 0){
@@ -27,20 +39,8 @@ function submit(){
         input.value = null;
         listCount++;
         todo.insertBefore(topMenu, todo.firstChild);
-        topMenu.appendChild(allDone);
-        allDone.id = "all-done";
-        allDone.textContent = "All";
-        topMenu.appendChild(all);
-        all.id = "all";
-        topMenu.appendChild(active);
-        active.id = "active";
-        topMenu.appendChild(completed);
-        completed.id = "completed";
         todo.insertBefore(countDisplay, null);
-        countDisplay.id = "count-display";
-        topMenu.id = "top-menu";
         countDisplay.textContent = `남은 할 일 ${listCount}개`;
-
         newList.onclick = function(){
             if(event.target.checked === true && event.target.type === 'checkbox'){
                 listCount--;
@@ -102,7 +102,7 @@ function changeText(){
         preEvent.textContent = preEvent.children[0].value;
     }
     countDisplay.textContent = `남은 할 일 ${listCount}개`;
-    toggleRemove();
+    remover();
 }
 
 
@@ -115,16 +115,13 @@ function removeBtn(){
         checkCount--;
     }
     countDisplay.textContent = `남은 할 일 ${listCount}개`;
-    toggleRemove();
+    remover();
 }
 
-function toggleRemove(){
+function remover(){
     if(listCount === 0 && checkCount === 0){
+        topMenu.remove();
         countDisplay.remove();
-        allDone.remove();
-        all.remove();
-        active.remove();
-        completed.remove();
     }
     if(checkCount === 0){
         clearBtn.remove();
@@ -223,8 +220,9 @@ function toggle(){
         let result = listArr.filter(f);
         for(let i = 0; i < listArr.length; i++){
             result[i].remove();
-            checkCount = 0;
             clearBtn.remove();
         }
+        checkCount = 0;
+        remover();
     }
 }
