@@ -111,7 +111,8 @@ allDone.onclick = function(){
 
 function edit(){
     if(event.target.tagName === "SPAN"){
-        event.target.innerHTML = `<input class="change-text" value=${event.target.textContent}>`
+        console.log(event.target.textContent);
+        event.target.innerHTML = `<input class="change-text" value="${event.target.textContent}">`
         revisions = event.target;
         html.addEventListener("click", function(){
             if(revisions.children[0] !== event.target){
