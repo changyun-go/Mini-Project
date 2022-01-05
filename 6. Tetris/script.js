@@ -13,23 +13,26 @@ for(let tr = 0; tr < 20; tr++){
 x = 4;
 y = 5;
 
-const i_data = [[x, y], [x+1, y], [x+2, y], [x+3, y], ['skyblue']];
-const o_data = [[x, y], [x+1, y], [x, y+1], [x+1, y+1], ['yellow']];
-const t_data = [[x, y], [x+1, y], [x+2, y], [x+1, y-1], ['purple']];
-const l_data = [[x, y], [x+1, y], [x+2, y], [x+2, y-1], ['orange']];
-const j_data = [[x, y], [x+1, y], [x+2, y], [x, y-1], ['blue']];
-const s_data = [[x, y], [x+1, y], [x+1, y-1], [x+2, y-1], ['green']];
-const z_data = [[x, y], [x+1, y], [x+1, y+1], [x+2, y+1], ['red']];
 
-
-function mino(shape_data){
-    for(let i = 0; i < 4; i++){
-        table.rows[shape_data[i][1]].cells[shape_data[i][0]].style.backgroundColor=shape_data[4];
-    }
-    console.log(x,y);
+const shape = {
+    i: [[x-1, y], [x, y], [x+1, y], [x+2, y], ['skyblue']],
+    o: [[x, y], [x+1, y], [x, y-1], [x+1, y-1], ['yellow']],
+    t: [[x-1, y], [x, y], [x+1, y], [x, y-1], ['purple']],
+    l: [[x-1, y], [x, y], [x+1, y], [x+1, y-1], ['orange']],
+    j: [[x-1, y], [x-1, y-1], [x, y], [x+1, y], ['blue']],
+    s: [[x-1, y], [x, y], [x, y-1], [x+1, y-1], ['green']],
+    z: [[x-1, y-1], [x, y-1], [x, y], [x+1, y], ['red']]
 }
 
-mino(i_data);
+function mino(choice){
+    for(let i = 0; i < 4; i++){
+        table.rows[choice[i][1]].cells[choice[i][0]].style.backgroundColor = choice[4];
+    }
+}
+
+table.rows[y].cells[x].textContent = 'c';
+
+mino(shape.l);
 
 
 
