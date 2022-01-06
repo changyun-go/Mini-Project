@@ -3,6 +3,15 @@ let newTr = 0;
 let x = 0;
 let y = 0;
 let p = 0;
+let randomItem = '';
+let mino = '';
+
+const randomBox = ['i', 'o', 't', 'l', 'j', 's', 'z'];
+    
+function random () {
+    randomItem = randomBox[Math.floor(Math.random() * randomBox.length)];
+    sessionStorage.setItem('randomItem', JSON.stringify(randomItem));
+}
 
 for(let tr = 0; tr < 20; tr++){
     newTr = table.appendChild(document.createElement('tr'));
@@ -11,30 +20,35 @@ for(let tr = 0; tr < 20; tr++){
     }
 }
 
+
+
 setInterval(function () {
     if(sessionStorage.getItem('jsonX') === null){
         sessionStorage.setItem('jsonX', 4);
         sessionStorage.setItem('jsonY', 2);
         sessionStorage.setItem('jsonP', 0);
     }
-
+    
     x = JSON.parse(sessionStorage.getItem('jsonX'));
     y = JSON.parse(sessionStorage.getItem('jsonY'));
     p = JSON.parse(sessionStorage.getItem('jsonP'));
+    randomItem = JSON.parse(sessionStorage.getItem('randomItem'));
 
     y++;
 
-    if(y > 20){
+    if(y > 22){
+        random();
         y = 0;
     }
-    
+
 
     sessionStorage.setItem('jsonY', JSON.stringify(y));
-
+    
     console.log(x,y,p);
-
+    console.log(mino);
+    
     const pos = [[x-1, y-1], [x, y-1], [x+1, y-1], [x+2, y-1], [x-1, y], [x, y], [x+1, y], [x+2, y], [x-1, y+1], [x, y+1], [x+1, y+1], [x+2, y+1], [x-1, y+2], [x, y+2], [x+1, y+2], [x+2, y+2]];
-
+    
     const shape = {
         i: [pos[4], pos[5], pos[6], pos[7], ['skyblue']],
         i_90: [pos[1], pos[5], pos[9], pos[13], ['skyblue']],
@@ -56,20 +70,73 @@ setInterval(function () {
         z_right: [pos[2], pos[5], pos[6], pos[9], ['red']],
         z_180: [pos[5], pos[6], pos[8], pos[9], ['red']]
     }
-const s = {
-    position: 
-    [[pos[4], pos[5], pos[2], pos[1]], 
-    [pos[10], pos[6], pos[5], pos[1]],
-    [pos[4], pos[5], pos[2], pos[1]], 
-    [pos[10], pos[6], pos[5], pos[1]]],
-    color: 'green'
-}
+    const i = {
+        position: 
+        [[pos[7], pos[6], pos[5], pos[4]], 
+        [pos[13], pos[9], pos[5], pos[1]],
+        [pos[7], pos[6], pos[5], pos[4]], 
+        [pos[13], pos[9], pos[5], pos[1]]],
+        color: 'skyblue'
+    }
+    const o = {
+        position: 
+        [[pos[6], pos[5], pos[2], pos[1]], 
+        [pos[6], pos[5], pos[2], pos[1]],
+        [pos[6], pos[5], pos[2], pos[1]], 
+        [pos[6], pos[5], pos[2], pos[1]]],
+        color: 'yellow'
+    }
+    const t = {
+        position: 
+        [[pos[6], pos[5], pos[4], pos[1]], 
+        [pos[9], pos[6], pos[5], pos[1]],
+        [pos[9], pos[6], pos[5], pos[4]], 
+        [pos[9], pos[5], pos[4], pos[1]]],
+        color: 'purple'
+    }
+    const l = {
+        position: 
+        [[pos[6], pos[5], pos[4], pos[2]], 
+        [pos[10], pos[9], pos[5], pos[1]],
+        [pos[8], pos[6], pos[5], pos[4]], 
+        [pos[9], pos[5], pos[1], pos[0]]],
+        color: 'orange'
+    }
+    const j = {
+        position: 
+        [[pos[6], pos[5], pos[4], pos[0]], 
+        [pos[9], pos[5], pos[2], pos[1]],
+        [pos[10], pos[6], pos[5], pos[4]], 
+        [pos[9], pos[8], pos[5], pos[1]]],
+        color: 'blue'
+    }
+    const s = {
+        position: 
+        [[pos[4], pos[5], pos[2], pos[1]], 
+        [pos[10], pos[6], pos[5], pos[1]],
+        [pos[4], pos[5], pos[2], pos[1]], 
+        [pos[10], pos[6], pos[5], pos[1]]],
+        color: 'green'
+    }
+    
+    const z = {
+        position: 
+        [[pos[6], pos[5], pos[1], pos[0]], 
+        [pos[8], pos[5], pos[4], pos[1]],
+        [pos[6], pos[5], pos[1], pos[0]], 
+        [pos[8], pos[5], pos[4], pos[1]]],
+        color: 'red'
+    }
+
+    
+    
+    mino = eval(randomItem);
+    
 
     for(let i = 0; i < 4; i++){
-        table.rows[s.position[p][i][1]-1].cells[s.position[p][i][0]].style.backgroundColor = '';
-        table.rows[s.position[p][i][1]].cells[s.position[p][i][0]].style.backgroundColor = s.color;
+        table.rows[mino.position[p][i][1]-1].cells[mino.position[p][i][0]].style.backgroundColor = '';
+        table.rows[mino.position[p][i][1]].cells[mino.position[p][i][0]].style.backgroundColor = mino.color;
     }
-console.log(s.position[p]);
 },600);
 
 
