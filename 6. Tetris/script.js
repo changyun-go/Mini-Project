@@ -14,12 +14,10 @@ x = 4;
 y = 4;
 
 
-for(let i = 0; i < 20; i++){
+let reload = setInterval(function () {
+    location.reload();
+},600);
 
-    setTimeout(function () {
-        location.reload();
-    },1000);
-}
 
 console.log(JSON.parse(sessionStorage.getItem('jsonX')));
 console.log(JSON.parse(sessionStorage.getItem('jsonY')));;
@@ -38,11 +36,12 @@ if(y > 20){
 sessionStorage.setItem('jsonY', JSON.stringify(y));
 
 
+// clearInterval(reload);
+
 document.addEventListener('keydown', () => {
     // 좌37 상38 우39 하40
     x = JSON.parse(sessionStorage.getItem('jsonX'));
     y = JSON.parse(sessionStorage.getItem('jsonY'));
-    console.log(x,y);
     if(event.keyCode === 37){
         x--;
     }
@@ -54,7 +53,12 @@ document.addEventListener('keydown', () => {
     }
     sessionStorage.setItem('jsonX', JSON.stringify(x));
     sessionStorage.setItem('jsonY', JSON.stringify(y));
-})
+    location.reload();
+});
+
+
+
+console.log(x,y);
 
 const pos = [[x-1, y-1], [x, y-1], [x+1, y-1], [x+2, y-1], [x-1, y], [x, y], [x+1, y], [x+2, y], [x-1, y+1], [x, y+1], [x+1, y+1], [x+2, y+1], [x-1, y+2], [x, y+2], [x+1, y+2], [x+2, y+2]];
 
@@ -88,7 +92,6 @@ const shape = {
 for(let i = 0; i < 4; i++){
     table.rows[shape.s[i][1]].cells[shape.s[i][0]].style.backgroundColor = shape.s[4];
 }
-
 
 
 
