@@ -9,10 +9,11 @@ let y = 0;
 let p = 0;
 let randomItem = '';
 let mino = '';
-let detect = 20;
+let detect = 0;
 let max_y = 0;
 let detector = 0;
 let mino_y = [];
+let blockSave = [];
 
 const randomBox = ['i', 'o', 't', 'l', 'j', 's', 'z'];
 
@@ -35,19 +36,36 @@ setInterval(function () {
         sessionStorage.setItem('jsonX', 4);
         sessionStorage.setItem('jsonY', 2);
         sessionStorage.setItem('jsonP', 0);
+        sessionStorage.setItem('detect', 20);
+        random();
     }
+
 
     x = JSON.parse(sessionStorage.getItem('jsonX'));
     y = JSON.parse(sessionStorage.getItem('jsonY'));
     p = JSON.parse(sessionStorage.getItem('jsonP'));
     randomItem = JSON.parse(sessionStorage.getItem('randomItem'));
+    detect = JSON.parse(sessionStorage.getItem('detect'));
+    blockSave = JSON.parse(sessionStorage.getItem('blockSave'));
+
+    console.log(blockSave);
+    
+    if(blockSave !== null){
+        for(let tr = 0; tr < 20; tr++){
+            for(let td = 0; td < 10; td++){
+                table.rows[tr].cells[td].style.backgroundColor = blockSave[tr*10 + td];
+            }
+        }
+    }
+
+   
 
     y++;
 
-    if(y >= detect){
-        random();
-        y = 0;
-    }
+    // if(y >= detect){
+    //     random();
+    //     y = 0;
+    // }
 
     sessionStorage.setItem('jsonY', JSON.stringify(y));
 
@@ -136,14 +154,24 @@ setInterval(function () {
 
         // 도형에서 각 x값마다 가장 큰 y값을 가지고 한 칸 앞에 주어진 셀의 색상 판별
         detector = table.rows[max_y + 1].cells[mino.position[p][i][0]].style.backgroundColor;
-        if(detector !== ''){
-            console.log(detector);
-            detect = y;
+        if(detector !== '' || max_y > 17){
+            detect = max_y;
+            blockSave = [];
+            for(let tr = 0; tr < 20; tr++){
+                for(let td = 0; td < 10; td++){
+                    blockSave.push(table.rows[tr].cells[td].style.backgroundColor);
+                }
+            }
+            sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
+            sessionStorage.setItem('detect', detect);
+
+            random();
+            sessionStorage.setItem('jsonY', 2);
         }
     }
+    console.log(max_y);
 
-
-},300);
+},200);
 
 
 document.addEventListener('keydown', () => {
