@@ -9,11 +9,11 @@ let y = 0;
 let p = 0;
 let randomItem = '';
 let mino = '';
-let detect = 0;
 let max_y = 0;
 let detector = 0;
 let mino_y = [];
 let blockSave = [];
+let c = 0;
 
 const randomBox = ['i', 'o', 't', 'l', 'j', 's', 'z'];
 
@@ -48,24 +48,24 @@ setInterval(function () {
     detect = JSON.parse(sessionStorage.getItem('detect'));
     blockSave = JSON.parse(sessionStorage.getItem('blockSave'));
 
-    console.log(blockSave);
-    
+    c = JSON.parse(sessionStorage.getItem('c'));
     if(blockSave !== null){
-        for(let tr = 0; tr < 20; tr++){
+        let i = 0;
+        console.log(c);
+        if(c === 10){
+            alert(111);
+            i = 1;
+        }
+        for(tr = i; tr < 20; tr++){
             for(let td = 0; td < 10; td++){
                 table.rows[tr].cells[td].style.backgroundColor = blockSave[tr*10 + td];
             }
         }
     }
-
-   
+    sessionStorage.setItem('c', JSON.stringify(0));
 
     y++;
 
-    // if(y >= detect){
-    //     random();
-    //     y = 0;
-    // }
 
     sessionStorage.setItem('jsonY', JSON.stringify(y));
 
@@ -132,44 +132,73 @@ setInterval(function () {
         color: 'red'      
     }
 
-    mino = eval(randomItem);
+    const test = {
+        position:
+        [[pos[7], pos[6], pos[5], pos[4], [x-2, y]],
+        [pos[7], pos[6], pos[5], pos[4], [x-2, y]],
+        [pos[7], pos[6], pos[5], pos[4], [x-2, y]],
+        [pos[7], pos[6], pos[5], pos[4],  [x-2, y]]],
+        color: 'skyblue'
+    }
 
-    for(let i = 0; i < 4; i++){
+    // mino = eval(randomItem);
+
+    mino = test;
+
+    for(let i = 0; i < 5; i++){//4로 변경필
         // 낙하 중인 블럭 궤적 지우기
         table.rows[mino.position[p][i][1]-1].cells[mino.position[p][i][0]].style.backgroundColor = '';
         // 블럭 색깔 생성
         table.rows[mino.position[p][i][1]].cells[mino.position[p][i][0]].style.backgroundColor = mino.color;
     }
-   
-    for(let i = 0; i < 4; i++){
-            mino_y = [];
-            for(let j = 0; j < 4; j++){
-                // x값이 일치하는 좌표 찾기
-                if(mino.position[p][i][0] === mino.position[p][j][0]){
-                    // y값들을 배열에 넣으면서 max값 찾기
-                    mino_y.push(mino.position[p][j][1]);
-                    max_y = Math.max.apply(null, mino_y);
-                }
-            }
 
+    
+    for(let i = 0; i < 5; i++){//4로 변경필
+        mino_y = [];
+        for(let j = 0; j < 4; j++){
+            // x값이 일치하는 좌표 찾기
+            if(mino.position[p][i][0] === mino.position[p][j][0]){
+                // y값들을 배열에 넣으면서 max값 찾기
+                mino_y.push(mino.position[p][j][1]);
+                max_y = Math.max.apply(null, mino_y);
+            }
+        }
+        
         // 도형에서 각 x값마다 가장 큰 y값을 가지고 한 칸 앞에 주어진 셀의 색상 판별
         detector = table.rows[max_y + 1].cells[mino.position[p][i][0]].style.backgroundColor;
         if(detector !== '' || max_y > 17){
-            detect = max_y;
             blockSave = [];
             for(let tr = 0; tr < 20; tr++){
+                c = 0;
                 for(let td = 0; td < 10; td++){
                     blockSave.push(table.rows[tr].cells[td].style.backgroundColor);
+                    if(table.rows[tr].cells[td].style.backgroundColor === 'skyblue'){
+                        c++;
+                    }
                 }
+                if(c === 10){
+                        blockSave.splice(tr*10, 10);
+                        console.log(tr);
+                        for(let td = 0; td < 10; td++){
+                            table.rows[tr].cells[td].style.backgroundColor = '';
+                            blockSave.unshift('red');
+                        }
+                        console.log(blockSave);
+                        sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
+                        sessionStorage.setItem('c', JSON.stringify(c));
+
+                        location.reload();
+
+
+                }
+                    
             }
             sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
-            sessionStorage.setItem('detect', detect);
-
+            console.log(blockSave);
             random();
             sessionStorage.setItem('jsonY', 2);
         }
     }
-    console.log(max_y);
 
 },200);
 
