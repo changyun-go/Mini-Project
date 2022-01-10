@@ -29,8 +29,6 @@ for(let tr = 0; tr < 20; tr++){
     }
 }
 
-
-
 setInterval(function () {
     if(sessionStorage.getItem('jsonX') === null){
         sessionStorage.setItem('jsonX', 4);
@@ -141,11 +139,11 @@ setInterval(function () {
         color: 'skyblue'
     }
 
-    // mino = eval(randomItem);
+    mino = eval(randomItem);
 
-    mino = test;
+    // mino = test;
 
-    for(let i = 0; i < 5; i++){//4로 변경필
+    for(let i = 0; i < 4; i++){
         // 낙하 중인 블럭 궤적 지우기
         table.rows[mino.position[p][i][1]-1].cells[mino.position[p][i][0]].style.backgroundColor = '';
         // 블럭 색깔 생성
@@ -153,7 +151,7 @@ setInterval(function () {
     }
 
     
-    for(let i = 0; i < 5; i++){//4로 변경필
+    for(let i = 0; i < 4; i++){
         mino_y = [];
         for(let j = 0; j < 4; j++){
             // x값이 일치하는 좌표 찾기
@@ -172,24 +170,23 @@ setInterval(function () {
                 c = 0;
                 for(let td = 0; td < 10; td++){
                     blockSave.push(table.rows[tr].cells[td].style.backgroundColor);
-                    if(table.rows[tr].cells[td].style.backgroundColor === 'skyblue'){
+                    if(table.rows[tr].cells[td].style.backgroundColor !== ''){
                         c++;
                     }
                 }
                 if(c === 10){
-                        blockSave.splice(tr*10, 10);
-                        console.log(tr);
-                        for(let td = 0; td < 10; td++){
-                            table.rows[tr].cells[td].style.backgroundColor = '';
-                            blockSave.unshift('red');
+                    console.log(tr);
+                    blockSave.splice(tr*10, 10);
+                    for(let k = 0; k < 10; k++){
+                        blockSave.unshift('');
+                    }
+                    for(let l = tr+1; l < 20; l++){
+                        for(let m = 0; m < 10; m++){
+                            blockSave.push(table.rows[l].cells[m].style.backgroundColor);
                         }
-                        console.log(blockSave);
-                        sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
-                        sessionStorage.setItem('c', JSON.stringify(c));
-
-                        location.reload();
-
-
+                    }
+                    console.log(blockSave);
+                    location.reload();
                 }
                     
             }
@@ -200,7 +197,7 @@ setInterval(function () {
         }
     }
 
-},200);
+},400);
 
 
 document.addEventListener('keydown', () => {
