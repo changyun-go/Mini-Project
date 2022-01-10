@@ -10,6 +10,7 @@ let p = 0;
 let randomItem = '';
 let mino = '';
 let max_y = 0;
+let min_y = 0;
 let detector = 0;
 let mino_y = [];
 let blockSave = [];
@@ -32,9 +33,8 @@ for(let tr = 0; tr < 20; tr++){
 setInterval(function () {
     if(sessionStorage.getItem('jsonX') === null){
         sessionStorage.setItem('jsonX', 4);
-        sessionStorage.setItem('jsonY', 2);
+        sessionStorage.setItem('jsonY', 0);
         sessionStorage.setItem('jsonP', 0);
-        sessionStorage.setItem('detect', 20);
         random();
     }
 
@@ -43,24 +43,15 @@ setInterval(function () {
     y = JSON.parse(sessionStorage.getItem('jsonY'));
     p = JSON.parse(sessionStorage.getItem('jsonP'));
     randomItem = JSON.parse(sessionStorage.getItem('randomItem'));
-    detect = JSON.parse(sessionStorage.getItem('detect'));
     blockSave = JSON.parse(sessionStorage.getItem('blockSave'));
 
-    c = JSON.parse(sessionStorage.getItem('c'));
     if(blockSave !== null){
-        let i = 0;
-        console.log(c);
-        if(c === 10){
-            alert(111);
-            i = 1;
-        }
-        for(tr = i; tr < 20; tr++){
+        for(let tr = 0; tr < 20; tr++){
             for(let td = 0; td < 10; td++){
                 table.rows[tr].cells[td].style.backgroundColor = blockSave[tr*10 + td];
             }
         }
     }
-    sessionStorage.setItem('c', JSON.stringify(0));
 
     y++;
 
@@ -159,45 +150,56 @@ setInterval(function () {
                 // y값들을 배열에 넣으면서 max값 찾기
                 mino_y.push(mino.position[p][j][1]);
                 max_y = Math.max.apply(null, mino_y);
+                min_y = Math.min.apply(null, mino_y);
+                console.log(max_y);
             }
         }
+        
+        
         
         // 도형에서 각 x값마다 가장 큰 y값을 가지고 한 칸 앞에 주어진 셀의 색상 판별
         detector = table.rows[max_y + 1].cells[mino.position[p][i][0]].style.backgroundColor;
         if(detector !== '' || max_y > 17){
-            blockSave = [];
-            for(let tr = 0; tr < 20; tr++){
-                c = 0;
-                for(let td = 0; td < 10; td++){
-                    blockSave.push(table.rows[tr].cells[td].style.backgroundColor);
-                    if(table.rows[tr].cells[td].style.backgroundColor !== ''){
-                        c++;
-                    }
-                }
-                if(c === 10){
-                    console.log(tr);
-                    blockSave.splice(tr*10, 10);
-                    for(let k = 0; k < 10; k++){
-                        blockSave.unshift('');
-                    }
-                    for(let l = tr+1; l < 20; l++){
-                        for(let m = 0; m < 10; m++){
-                            blockSave.push(table.rows[l].cells[m].style.backgroundColor);
+            console.log(min_y);
+            if(min_y === 1){
+                blockSave = new Array(200);
+                sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
+                location.reload();
+            }
+            else{
+                blockSave = [];
+                for(let tr = 0; tr < 20; tr++){
+                    c = 0;
+                    for(let td = 0; td < 10; td++){
+                        blockSave.push(table.rows[tr].cells[td].style.backgroundColor);
+                        if(table.rows[tr].cells[td].style.backgroundColor !== ''){
+                            c++;
                         }
                     }
-                    console.log(blockSave);
-                    location.reload();
-                }
+                    if(c === 10){
+                        console.log(tr);
+                        blockSave.splice(tr*10, 10);
+                        for(let k = 0; k < 10; k++){
+                            blockSave.unshift('');
+                        }
+                        for(let l = tr+1; l < 20; l++){
+                            for(let m = 0; m < 10; m++){
+                                blockSave.push(table.rows[l].cells[m].style.backgroundColor);
+                            }
+                        }
+                        location.reload();
+                    }
                     
+                }
+                sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
+                random();
+                sessionStorage.setItem('jsonY', 0);
+
             }
-            sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
-            console.log(blockSave);
-            random();
-            sessionStorage.setItem('jsonY', 2);
         }
     }
 
-},400);
+},100);
 
 
 document.addEventListener('keydown', () => {
