@@ -9,10 +9,12 @@ let y = 0;
 let p = 0;
 let randomItem = '';
 let mino = '';
+let mino_x = [];
+let max_x = 0;
+let min_x = 0;
 let mino_y = [];
 let max_y = 0;
 let min_y = 0;
-let detector = 0;
 let blockSave = [];
 let c = 0;
 
@@ -33,6 +35,7 @@ for(let tr = 0; tr < 20; tr++){
 
 sessionStorage.setItem('leftLock', 0);
 sessionStorage.setItem('rightLock', 0);
+sessionStorage.setItem('downLock', 0);
 
 setInterval(function () {
     if(sessionStorage.getItem('jsonX') === null){
@@ -145,18 +148,12 @@ setInterval(function () {
         table.rows[mino.position[p][i][1]-1].cells[mino.position[p][i][0]].style.backgroundColor = '';
         // 블럭 색깔 생성
         table.rows[mino.position[p][i][1]].cells[mino.position[p][i][0]].style.backgroundColor = mino.color;
-        // 필드 영역 벗어나면 Lock 활성화
-        if(mino.position[p][i][0] <= 0){
-            sessionStorage.setItem('leftLock', 1);
-        }
        
-        if(mino.position[p][i][0] >= 9){
-            sessionStorage.setItem('rightLock', 1);
-        }
     }
 
     
     for(let i = 0; i < 4; i++){
+        mino_x = [];
         mino_y = [];
         for(let j = 0; j < 4; j++){
             // x값이 일치하는 좌표 찾기
@@ -165,15 +162,38 @@ setInterval(function () {
                 mino_y.push(mino.position[p][j][1]);
                 max_y = Math.max.apply(null, mino_y);
                 min_y = Math.min.apply(null, mino_y);
-                // console.log(max_y);
             }
             
         }
+        // console.log(max_y);
+        // console.log(min_y);
 
+        for(let j = 0; j < 4; j++){
+            // x값이 일치하는 좌표 찾기
+            if(mino.position[p][i][1] === mino.position[p][j][1]){
+                // y값들을 배열에 넣으면서 max값 찾기
+                mino_x.push(mino.position[p][j][0]);
+                max_x = Math.max.apply(null, mino_x);
+                min_x = Math.min.apply(null, mino_x);
+            }
+
+        }
+
+         // 필드 영역 벗어나면 Lock 활성화
+        if(min_x <= 0 || table.rows[mino.position[p][i][1]].cells[min_x - 1].style.backgroundColor !== ''){
+            sessionStorage.setItem('leftLock', 1);
+        }
+
+        if(max_x >= 9 || table.rows[mino.position[p][i][1]].cells[max_x + 1].style.backgroundColor !== ''){
+            sessionStorage.setItem('rightLock', 1);
+        }
+
+        if(max_y + 1 >= 19 || table.rows[max_y + 2].cells[mino.position[p][i][0]].style.backgroundColor !== ''){
+            sessionStorage.setItem('downLock', 1);
+        }
 
         // 도형에서 각 x값마다 가장 큰 y값을 가지고 한 칸 앞에 주어진 셀의 색상 판별
-        detector = table.rows[max_y + 1].cells[mino.position[p][i][0]].style.backgroundColor;
-        if(detector !== '' || max_y >= 18){
+        if(max_y >= 19 || table.rows[max_y + 1].cells[mino.position[p][i][0]].style.backgroundColor !== ''){
             console.log(min_y);
             if(min_y === 1){
                 blockSave = new Array(200);
@@ -227,20 +247,24 @@ document.addEventListener('keydown', () => {
         case 37:
             if(JSON.parse(sessionStorage.getItem('leftLock')) === 0){
                 x--;
+                y--;
             }
             break;
         case 39:
             if(JSON.parse(sessionStorage.getItem('rightLock')) === 0){
                 x++;
+                y--;
             }
             break;
-        case 40:
-            y++;
+        case 40: 
+            if(JSON.parse(sessionStorage.getItem('downLock')) === 0){
+                y++;
+            }
             break;
         case 32:
             y = 18;
             break;
-        case 38:
+        case 38: 
             p++;
             if(p > 3){
                 p = 0;
@@ -261,13 +285,21 @@ document.addEventListener('click', () => {
 
     switch (event.target.id) {
         case 'left-key':
-            x--;
+            if(JSON.parse(sessionStorage.getItem('leftLock')) === 0){
+                x--;
+                y--;
+            }
             break;
         case 'right-key':
-            x++;
+            if(JSON.parse(sessionStorage.getItem('rightLock')) === 0){
+                x++;
+                y--;
+            }
             break;
         case 'down-key':
-            y++;
+            if(JSON.parse(sessionStorage.getItem('downLock')) === 0){
+                y++;
+            }
             break;
         case 'space':
             y = 18;
