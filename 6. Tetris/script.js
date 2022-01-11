@@ -9,12 +9,13 @@ let y = 0;
 let p = 0;
 let randomItem = '';
 let mino = '';
+let mino_y = [];
 let max_y = 0;
 let min_y = 0;
 let detector = 0;
-let mino_y = [];
 let blockSave = [];
 let c = 0;
+
 
 const randomBox = ['i', 'o', 't', 'l', 'j', 's', 'z'];
 
@@ -30,6 +31,9 @@ for(let tr = 0; tr < 20; tr++){
     }
 }
 
+sessionStorage.setItem('leftLock', 0);
+sessionStorage.setItem('rightLock', 0);
+
 setInterval(function () {
     if(sessionStorage.getItem('jsonX') === null){
         sessionStorage.setItem('jsonX', 4);
@@ -44,6 +48,7 @@ setInterval(function () {
     p = JSON.parse(sessionStorage.getItem('jsonP'));
     randomItem = JSON.parse(sessionStorage.getItem('randomItem'));
     blockSave = JSON.parse(sessionStorage.getItem('blockSave'));
+
 
     if(blockSave !== null){
         for(let tr = 0; tr < 20; tr++){
@@ -134,11 +139,20 @@ setInterval(function () {
 
     // mino = test;
 
+
     for(let i = 0; i < 4; i++){
         // 낙하 중인 블럭 궤적 지우기
         table.rows[mino.position[p][i][1]-1].cells[mino.position[p][i][0]].style.backgroundColor = '';
         // 블럭 색깔 생성
         table.rows[mino.position[p][i][1]].cells[mino.position[p][i][0]].style.backgroundColor = mino.color;
+        // 필드 영역 벗어나면 Lock 활성화
+        if(mino.position[p][i][0] <= 0){
+            sessionStorage.setItem('leftLock', 1);
+        }
+       
+        if(mino.position[p][i][0] >= 9){
+            sessionStorage.setItem('rightLock', 1);
+        }
     }
 
     
@@ -151,15 +165,15 @@ setInterval(function () {
                 mino_y.push(mino.position[p][j][1]);
                 max_y = Math.max.apply(null, mino_y);
                 min_y = Math.min.apply(null, mino_y);
-                console.log(max_y);
+                // console.log(max_y);
             }
+            
         }
-        
-        
-        
+
+
         // 도형에서 각 x값마다 가장 큰 y값을 가지고 한 칸 앞에 주어진 셀의 색상 판별
         detector = table.rows[max_y + 1].cells[mino.position[p][i][0]].style.backgroundColor;
-        if(detector !== '' || max_y > 17){
+        if(detector !== '' || max_y >= 18){
             console.log(min_y);
             if(min_y === 1){
                 blockSave = new Array(200);
@@ -177,7 +191,6 @@ setInterval(function () {
                         }
                     }
                     if(c === 10){
-                        console.log(tr);
                         blockSave.splice(tr*10, 10);
                         for(let k = 0; k < 10; k++){
                             blockSave.unshift('');
@@ -193,13 +206,14 @@ setInterval(function () {
                 }
                 sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
                 random();
+                sessionStorage.setItem('jsonX', 4);
                 sessionStorage.setItem('jsonY', 0);
 
             }
         }
     }
 
-},100);
+},300);
 
 
 document.addEventListener('keydown', () => {
@@ -207,12 +221,18 @@ document.addEventListener('keydown', () => {
     y = JSON.parse(sessionStorage.getItem('jsonY'));
     p = JSON.parse(sessionStorage.getItem('jsonP'));
 
+   
+
     switch (event.keyCode) {
         case 37:
-            x--;
+            if(JSON.parse(sessionStorage.getItem('leftLock')) === 0){
+                x--;
+            }
             break;
         case 39:
-            x++;
+            if(JSON.parse(sessionStorage.getItem('rightLock')) === 0){
+                x++;
+            }
             break;
         case 40:
             y++;
