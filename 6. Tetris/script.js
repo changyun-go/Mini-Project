@@ -40,12 +40,19 @@ for(let tr = 0; tr < 20; tr++){
 sessionStorage.setItem('leftLock', 0);
 sessionStorage.setItem('rightLock', 0);
 sessionStorage.setItem('downLock', 0);
+sessionStorage.setItem('turnLock', 0);
 
 if(sessionStorage.getItem('jsonX') === null){
     sessionStorage.setItem('jsonX', 4);
     sessionStorage.setItem('jsonY', 0);
     sessionStorage.setItem('jsonP', 0);
     sessionStorage.setItem('combo', 0);
+    for(let tr = 0; tr < 20; tr++){
+        for(let td = 0; td < 10; td++){
+            blockSave.push('');
+        }
+    }
+    sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
     random();
 }
 
@@ -165,19 +172,31 @@ setInterval(function () {
         color: 'skyblue'
     }
 
-    // mino = eval(randomItem);
-    mino = test;
+    mino = eval(randomItem);
+    // mino = test;
 
-    for(let i = 0; i < 5; i++){// -> 4
+    for(let i = 0; i < 4; i++){// -> 4
         // 낙하 중인 블럭 궤적 지우기
+        
         table.rows[mino.position[p][i][1]-1].cells[mino.position[p][i][0]].style.backgroundColor = '';
         // 블럭 색깔 생성
         table.rows[mino.position[p][i][1]].cells[mino.position[p][i][0]].style.backgroundColor = mino.color;
+
+        let next_p = p + 1;
+
+        if(next_p > 3){
+            next_p = 0;
+        }
+        
+        console.log(mino.position[next_p][i][1]);
+        if(mino.position[next_p][i][0] <= 0 || mino.position[next_p][i][0] >= 10 || mino.position[next_p][i][1] >= 19 || blockSave[mino.position[next_p][i][1]*10 + mino.position[next_p][i][0]] !== ''){
+            sessionStorage.setItem('turnLock', 1);
+        }
        
     }
 
     
-    for(let i = 0; i < 5; i++){// -> 4
+    for(let i = 0; i < 4; i++){// -> 4
         mino_x = [];
         mino_y = [];
         for(let j = 0; j < 4; j++){
@@ -219,7 +238,12 @@ setInterval(function () {
         if(max_y >= 19 || table.rows[max_y + 1].cells[mino.position[p][i][0]].style.backgroundColor !== ''){
             console.log(min_y);
             if(min_y <= 1){
-                blockSave = new Array(200);
+                blockSave = [];
+                for(let tr = 0; tr < 20; tr++){
+                    for(let td = 0; td < 10; td++){
+                        blockSave.push('');
+                    }
+                }
                 sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
                 sessionStorage.setItem('jsonP', 0);
                 sessionStorage.setItem('combo', 0);
@@ -250,7 +274,6 @@ setInterval(function () {
                     }
                     
                 }
-             
                 sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
                 sessionStorage.setItem('jsonX', 4);
                 sessionStorage.setItem('jsonY', 0);
@@ -274,10 +297,10 @@ document.addEventListener('keydown', () => {
 
     switch (event.keyCode) {
         case 37:
-            // if(JSON.parse(sessionStorage.getItem('leftLock')) === 0){
+            if(JSON.parse(sessionStorage.getItem('leftLock')) === 0){
                 x--;
                 y--;
-            // }
+            }
             break;
         case 39:
             if(JSON.parse(sessionStorage.getItem('rightLock')) === 0){
@@ -294,9 +317,12 @@ document.addEventListener('keydown', () => {
             y = 18;
             break;
         case 38: 
-            p++;
-            if(p > 3){
-                p = 0;
+            if(JSON.parse(sessionStorage.getItem('turnLock')) === 0){
+                p++;
+                y--;
+                if(p > 3){
+                    p = 0;
+                }
             }
             break;
     }
@@ -335,10 +361,12 @@ document.addEventListener('click', () => {
         case 'space':
            
             break;
-        case 'up-key': 
-            p++;
-            if(p > 3){
-                p = 0;
+        case 'up-key':
+            if(JSON.parse(sessionStorage.getItem('turnLock')) === 0){
+                p++;
+                if(p > 3){
+                    p = 0;
+                }
             }
             break;
     }
