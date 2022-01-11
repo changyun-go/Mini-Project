@@ -4,6 +4,7 @@ const rightKey = document.querySelector('#right-key');
 const downKey = document.querySelector('#down-key');
 const upKey = document.querySelector('#up-key');
 const comboDisplay = document.querySelector('#combo-display');
+const levelDisplay = document.querySelector('#level-display');
 let newTr = 0;
 let x = 0;
 let y = 0;
@@ -19,7 +20,8 @@ let min_y = 0;
 let blockSave = [];
 let c = 0;
 let combo = 0;
-
+let speed = 300;
+let level = 1;
 
 const randomBox = ['i', 'o', 't', 'l', 'j', 's', 'z'];
 
@@ -39,20 +41,40 @@ sessionStorage.setItem('leftLock', 0);
 sessionStorage.setItem('rightLock', 0);
 sessionStorage.setItem('downLock', 0);
 
+if(sessionStorage.getItem('jsonX') === null){
+    sessionStorage.setItem('jsonX', 4);
+    sessionStorage.setItem('jsonY', 0);
+    sessionStorage.setItem('jsonP', 0);
+    sessionStorage.setItem('combo', 0);
+    random();
+}
+
+// 콤보 표시
+combo = JSON.parse(sessionStorage.getItem('combo'));
+comboDisplay.textContent = `${combo} COMBO`;
+
+// 속도 조절
+if(combo >= 6){
+    speed = 30;
+    level = 4;
+}
+else if(combo >= 4){
+    speed = 50;
+    level = 3;
+}
+else if(combo >= 2){
+    speed = 100;
+    level = 2;
+}
+// 레벨 표시
+levelDisplay.textContent = `LEVEL ${level}`;
+
 setInterval(function () {
-    if(sessionStorage.getItem('jsonX') === null){
-        sessionStorage.setItem('jsonX', 4);
-        sessionStorage.setItem('jsonY', 0);
-        sessionStorage.setItem('jsonP', 0);
-        sessionStorage.setItem('combo', 0);
-        random();
-    }
-
-
     x = JSON.parse(sessionStorage.getItem('jsonX'));
     y = JSON.parse(sessionStorage.getItem('jsonY'));
     p = JSON.parse(sessionStorage.getItem('jsonP'));
     combo = JSON.parse(sessionStorage.getItem('combo'));
+    speed = JSON.parse(sessionStorage.getItem('speed'));
     randomItem = JSON.parse(sessionStorage.getItem('randomItem'));
     blockSave = JSON.parse(sessionStorage.getItem('blockSave'));
 
@@ -236,9 +258,10 @@ setInterval(function () {
             }
         }
     }
-comboDisplay.textContent = `${combo} COMBO`;
 
-},100);
+},speed);
+
+
 
 
 
