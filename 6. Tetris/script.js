@@ -3,6 +3,7 @@ const leftKey = document.querySelector('#left-key');
 const rightKey = document.querySelector('#right-key');
 const downKey = document.querySelector('#down-key');
 const upKey = document.querySelector('#up-key');
+const comboDisplay = document.querySelector('#combo-display');
 let newTr = 0;
 let x = 0;
 let y = 0;
@@ -17,6 +18,7 @@ let max_y = 0;
 let min_y = 0;
 let blockSave = [];
 let c = 0;
+let combo = 0;
 
 
 const randomBox = ['i', 'o', 't', 'l', 'j', 's', 'z'];
@@ -42,6 +44,7 @@ setInterval(function () {
         sessionStorage.setItem('jsonX', 4);
         sessionStorage.setItem('jsonY', 0);
         sessionStorage.setItem('jsonP', 0);
+        sessionStorage.setItem('combo', 0);
         random();
     }
 
@@ -49,6 +52,7 @@ setInterval(function () {
     x = JSON.parse(sessionStorage.getItem('jsonX'));
     y = JSON.parse(sessionStorage.getItem('jsonY'));
     p = JSON.parse(sessionStorage.getItem('jsonP'));
+    combo = JSON.parse(sessionStorage.getItem('combo'));
     randomItem = JSON.parse(sessionStorage.getItem('randomItem'));
     blockSave = JSON.parse(sessionStorage.getItem('blockSave'));
 
@@ -61,16 +65,17 @@ setInterval(function () {
         }
     }
 
+    
+    
     y++;
-
 
     sessionStorage.setItem('jsonY', JSON.stringify(y));
 
     console.log(x,y,p);
 
-    // 상대적인 16칸짜리 좌표를 생성
     const pos = [[x-1, y-1], [x, y-1], [x+1, y-1], [x+2, y-1], [x-1, y], [x, y], [x+1, y], [x+2, y], [x-1, y+1], [x, y+1], [x+1, y+1], [x+2, y+1], [x-1, y+2], [x, y+2], [x+1, y+2], [x+2, y+2]];
 
+    // 상대적인 16칸짜리 좌표를 생성
     // 좌표를 이용한 블록 데이터
     const i = {
         position:
@@ -138,12 +143,10 @@ setInterval(function () {
         color: 'skyblue'
     }
 
-    mino = eval(randomItem);
+    // mino = eval(randomItem);
+    mino = test;
 
-    // mino = test;
-
-
-    for(let i = 0; i < 4; i++){
+    for(let i = 0; i < 5; i++){// -> 4
         // 낙하 중인 블럭 궤적 지우기
         table.rows[mino.position[p][i][1]-1].cells[mino.position[p][i][0]].style.backgroundColor = '';
         // 블럭 색깔 생성
@@ -152,7 +155,7 @@ setInterval(function () {
     }
 
     
-    for(let i = 0; i < 4; i++){
+    for(let i = 0; i < 5; i++){// -> 4
         mino_x = [];
         mino_y = [];
         for(let j = 0; j < 4; j++){
@@ -165,8 +168,6 @@ setInterval(function () {
             }
             
         }
-        // console.log(max_y);
-        // console.log(min_y);
 
         for(let j = 0; j < 4; j++){
             // x값이 일치하는 좌표 찾기
@@ -195,9 +196,11 @@ setInterval(function () {
         // 도형에서 각 x값마다 가장 큰 y값을 가지고 한 칸 앞에 주어진 셀의 색상 판별
         if(max_y >= 19 || table.rows[max_y + 1].cells[mino.position[p][i][0]].style.backgroundColor !== ''){
             console.log(min_y);
-            if(min_y === 1){
+            if(min_y <= 1){
                 blockSave = new Array(200);
                 sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
+                sessionStorage.setItem('jsonP', 0);
+                sessionStorage.setItem('combo', 0);
                 location.reload();
             }
             else{
@@ -220,20 +223,23 @@ setInterval(function () {
                                 blockSave.push(table.rows[l].cells[m].style.backgroundColor);
                             }
                         }
+                        sessionStorage.setItem('combo', combo + 1);
                         location.reload();
                     }
                     
                 }
+             
                 sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
-                random();
                 sessionStorage.setItem('jsonX', 4);
                 sessionStorage.setItem('jsonY', 0);
-
+                random();
             }
         }
     }
+comboDisplay.textContent = `${combo} COMBO`;
 
-},300);
+},100);
+
 
 
 document.addEventListener('keydown', () => {
@@ -245,10 +251,10 @@ document.addEventListener('keydown', () => {
 
     switch (event.keyCode) {
         case 37:
-            if(JSON.parse(sessionStorage.getItem('leftLock')) === 0){
+            // if(JSON.parse(sessionStorage.getItem('leftLock')) === 0){
                 x--;
                 y--;
-            }
+            // }
             break;
         case 39:
             if(JSON.parse(sessionStorage.getItem('rightLock')) === 0){
@@ -278,10 +284,12 @@ document.addEventListener('keydown', () => {
     location.reload();
 });
 
+
 document.addEventListener('click', () => {
     x = JSON.parse(sessionStorage.getItem('jsonX'));
     y = JSON.parse(sessionStorage.getItem('jsonY'));
     p = JSON.parse(sessionStorage.getItem('jsonP'));
+
 
     switch (event.target.id) {
         case 'left-key':
@@ -302,9 +310,9 @@ document.addEventListener('click', () => {
             }
             break;
         case 'space':
-            y = 18;
+           
             break;
-        case 'up-key':
+        case 'up-key': 
             p++;
             if(p > 3){
                 p = 0;
