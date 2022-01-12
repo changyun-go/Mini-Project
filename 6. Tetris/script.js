@@ -49,7 +49,7 @@ for(let tr = 0; tr < 20; tr++){
 // 최초 실행 시 세션 스토리지 초기값 설정
 if(sessionStorage.getItem('x') === null){
     sessionStorage.setItem('x', 4);
-    sessionStorage.setItem('y', 0);
+    sessionStorage.setItem('y', -1);
     sessionStorage.setItem('p', 0);
     sessionStorage.setItem('combo', 0);
     for(let tr = 0; tr < 20; tr++){
@@ -182,7 +182,7 @@ setInterval(function () {
         color: 'green'
     }
     const z = {
-        position:
+        position: 
         [[pos[6], pos[5], pos[1], pos[0]],
         [pos[8], pos[5], pos[4], pos[1]],
         [pos[6], pos[5], pos[1], pos[0]],
@@ -213,6 +213,7 @@ setInterval(function () {
         }
     }
 
+    targetArr = [];
     for(let i = 0; i < 4; i++){
         mino_x = [];
         mino_y = [];
@@ -243,8 +244,8 @@ setInterval(function () {
             if(blockSave[j*10 + mino.position[p][i][0]] !== ''){
                 column.push(j);
             }
-        }
-        // 가장 미노와 가까운 위치 구하기
+        } 
+        // 가장 미노와 가까운 위치 구하기 
         target = Math.min.apply(null, column);
         // 최초 실행 시
         if(target === Infinity){
@@ -253,7 +254,12 @@ setInterval(function () {
         // 미노와 하단 블록 과의 거리 구하기
         targetArr.push(target - max_y - 2);
         jump = Math.min.apply(null, targetArr);
+
+        if(jump < 0){
+            jump = 0;
+        }
         sessionStorage.setItem('jump', jump);
+
 
 
         // 필드 영역 벗어 나면 Lock 활성화

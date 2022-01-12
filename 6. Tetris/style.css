@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Ubuntu+Mono:wght@700&display=swap');
+body{
+    width: 1000px;
+    margin: auto;
+    background-color: #35589A;
+}
 td{
-    
     border: 0.5px solid;
     padding: 0;
 }
@@ -10,12 +14,6 @@ table{
     background-color: black;
     width: 35vh;
     height: 70vh;
-}
-
-
-.bottom{
-    width: 1000px;
-    margin: auto;
 }
 button{
     -webkit-appearance: none;
@@ -34,12 +32,21 @@ button:active{
     margin-top: 5px;
     box-shadow: none;
 }
+.container{
+    display: flex;
+}
+.item{
+    margin: 50px 80px 0px 50px;
+}
 .controller{
     position: absolute;
     top: 79vh;
     text-align: center;
 }
-
+.bottom{
+    width: 1000px;
+    margin: auto;
+}
 #left-key{
     position: absolute;
     left: 50px;
@@ -62,26 +69,14 @@ button:active{
     position: absolute;
     left: 612.5px;
     background-color: #FC9918;
-
 }
 #space{
     position: absolute;
     left: 800px;
     background-color: #FC9918;
-
-}
-.container{
-    display: flex;
-
-}
-body{
-    width: 1000px;
-    margin: auto;
-    background-color: #35589A;
-
 }
 #level-display{
-    margin-top: 100px;
+    margin-top: 150px;
     color: white;
     font-family: 'Ubuntu Mono', monospace;
     font-size: 80px;
@@ -89,15 +84,11 @@ body{
 #combo-display{
     font-size: 70px;
     font-family: 'Ubuntu Mono', monospace;
-
 }
 #initial{
     margin-top: 500px;
     font-size: 30px;
     font-family: 'Ubuntu Mono', monospace;
-}
-.item{
-    margin: 50px 80px 0px 50px;
 }
 @media(max-width: 600px){
     table{
