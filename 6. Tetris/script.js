@@ -22,6 +22,7 @@ let c = 0;
 let combo = 0;
 let speed = 300;
 let level = 1;
+let move = 19;
 
 const randomBox = ['i', 'o', 't', 'l', 'j', 's', 'z'];
 
@@ -174,7 +175,6 @@ setInterval(function () {
 
     mino = eval(randomItem);
     // mino = test;
-
     for(let i = 0; i < 4; i++){// -> 4
         // 낙하 중인 블럭 궤적 지우기
         
@@ -188,13 +188,16 @@ setInterval(function () {
             next_p = 0;
         }
         
-        console.log(mino.position[next_p][i][1]);
         if(mino.position[next_p][i][0] <= 0 || mino.position[next_p][i][0] >= 10 || mino.position[next_p][i][1] >= 19 || blockSave[mino.position[next_p][i][1]*10 + mino.position[next_p][i][0]] !== ''){
             sessionStorage.setItem('turnLock', 1);
         }
-       
-    }
 
+         
+        
+        
+    }
+    
+    let targetArr = [];
     
     for(let i = 0; i < 4; i++){// -> 4
         mino_x = [];
@@ -220,8 +223,24 @@ setInterval(function () {
             }
 
         }
+        let current_row = [];
 
-         // 필드 영역 벗어나면 Lock 활성화
+        for(let j = 0; j < 20; j++){
+            if(blockSave[j*10 + mino.position[p][i][0]] !== ''){
+                current_row.push(j);
+            }
+        }
+        let target = Math.min.apply(null, current_row);
+        
+        if(target === Infinity){
+            target = 20
+        }
+        targetArr.push(target - max_y - 2);
+        let jump = Math.min.apply(null, targetArr);        
+        sessionStorage.setItem('jump', jump);
+
+
+         // 필드 영역 벗어 나면 Lock 활성화
         if(min_x <= 0 || table.rows[mino.position[p][i][1]].cells[min_x - 1].style.backgroundColor !== ''){
             sessionStorage.setItem('leftLock', 1);
         }
@@ -236,7 +255,6 @@ setInterval(function () {
 
         // 도형에서 각 x값마다 가장 큰 y값을 가지고 한 칸 앞에 주어진 셀의 색상 판별
         if(max_y >= 19 || table.rows[max_y + 1].cells[mino.position[p][i][0]].style.backgroundColor !== ''){
-            console.log(min_y);
             if(min_y <= 1){
                 blockSave = [];
                 for(let tr = 0; tr < 20; tr++){
@@ -292,8 +310,8 @@ document.addEventListener('keydown', () => {
     x = JSON.parse(sessionStorage.getItem('jsonX'));
     y = JSON.parse(sessionStorage.getItem('jsonY'));
     p = JSON.parse(sessionStorage.getItem('jsonP'));
-
-   
+    jump = JSON.parse(sessionStorage.getItem('jump'));
+    
 
     switch (event.keyCode) {
         case 37:
@@ -314,7 +332,7 @@ document.addEventListener('keydown', () => {
             }
             break;
         case 32:
-            y = 18;
+            y = y + jump;
             break;
         case 38: 
             if(JSON.parse(sessionStorage.getItem('turnLock')) === 0){
@@ -338,7 +356,7 @@ document.addEventListener('click', () => {
     x = JSON.parse(sessionStorage.getItem('jsonX'));
     y = JSON.parse(sessionStorage.getItem('jsonY'));
     p = JSON.parse(sessionStorage.getItem('jsonP'));
-
+    jump = JSON.parse(sessionStorage.getItem('jump'));
 
     switch (event.target.id) {
         case 'left-key':
@@ -359,11 +377,12 @@ document.addEventListener('click', () => {
             }
             break;
         case 'space':
-           
+            y = y + jump;
             break;
         case 'up-key':
             if(JSON.parse(sessionStorage.getItem('turnLock')) === 0){
                 p++;
+                y--;
                 if(p > 3){
                     p = 0;
                 }
