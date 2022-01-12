@@ -20,7 +20,7 @@ let min_y = 0;
 let blockSave = [];
 let c = 0;
 let combo = 0;
-let speed = 300;
+let speed = 500;
 let level = 1;
 let move = 19;
 
@@ -60,18 +60,42 @@ if(sessionStorage.getItem('jsonX') === null){
 // 콤보 표시
 combo = JSON.parse(sessionStorage.getItem('combo'));
 comboDisplay.textContent = `${combo} COMBO`;
-
 // 속도 조절
-if(combo >= 6){
-    speed = 30;
+if(combo === 15){
+    blockSave = [];
+    for(let k = 0; k < 20; k++){
+        for(let l = 0; l < 10; l++){
+            blockSave.push('');
+        }
+    }
+    sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
+    sessionStorage.setItem('jsonP', 0);
+    sessionStorage.setItem('combo', 0);
+    confirm('WIN🎉\n다시 도전하시겠습니까?');
+    location.reload();
+}
+else if(combo >= 12){
+    speed = 100;
+    level = 7;
+}
+else if(combo >= 10){
+    speed = 150;
+    level = 6;
+}
+else if(combo >= 8){
+    speed = 200;
+    level = 5;
+}
+else if(combo >= 6){
+    speed = 250;
     level = 4;
 }
 else if(combo >= 4){
-    speed = 50;
+    speed = 300;
     level = 3;
 }
 else if(combo >= 2){
-    speed = 100;
+    speed = 400;
     level = 2;
 }
 // 레벨 표시
@@ -256,17 +280,19 @@ setInterval(function () {
 
         // 도형에서 각 x값마다 가장 큰 y값을 가지고 한 칸 앞에 주어진 셀의 색상 판별
         if(max_y >= 19 || table.rows[max_y + 1].cells[mino.position[p][i][0]].style.backgroundColor !== ''){
-            if(min_y <= 1){
+            if(min_y <= 0){
                 blockSave = [];
                 for(let tr = 0; tr < 20; tr++){
                     for(let td = 0; td < 10; td++){
                         blockSave.push('');
                     }
-                }
+                } 
                 sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
                 sessionStorage.setItem('jsonP', 0);
                 sessionStorage.setItem('combo', 0);
+                confirm('LOSE😭\n다시 도전하시겠습니까?')
                 location.reload();
+                break;
             }
             else{
                 blockSave = [];
@@ -321,6 +347,7 @@ document.addEventListener('keydown', () => {
                 y--;
             }
             break;
+
         case 39:
             if(JSON.parse(sessionStorage.getItem('rightLock')) === 0){
                 x++;
