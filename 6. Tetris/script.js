@@ -177,8 +177,9 @@ setInterval(function () {
     // mino = test;
     for(let i = 0; i < 4; i++){// -> 4
         // 낙하 중인 블럭 궤적 지우기
-        
-        table.rows[mino.position[p][i][1]-1].cells[mino.position[p][i][0]].style.backgroundColor = '';
+        if(mino.position[p][i][1]-1 >= 0){
+            table.rows[mino.position[p][i][1]-1].cells[mino.position[p][i][0]].style.backgroundColor = '';
+        }
         // 블럭 색깔 생성
         table.rows[mino.position[p][i][1]].cells[mino.position[p][i][0]].style.backgroundColor = mino.color;
 
@@ -294,7 +295,7 @@ setInterval(function () {
                 }
                 sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
                 sessionStorage.setItem('jsonX', 4);
-                sessionStorage.setItem('jsonY', 0);
+                sessionStorage.setItem('jsonY', -1);
                 random();
             }
         }
