@@ -1,9 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Ubuntu+Mono:wght@700&display=swap');
 td{
-    width: 20px;
-    height: 20px;
-    border: 1px solid;
+    
+    border: 0.5px solid;
+    padding: 0;
+}
+table{
+    border-collapse: collapse;
+    background-color: black;
+    width: 35vh;
+    height: 70vh;
+}
+
+
+.bottom{
+    width: 1000px;
+    margin: auto;
 }
 button{
-    width: 100px;
-    height: 100px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 150px;
+    height: 150px;
+    border-radius: 40px;
+    font-size: 45px;
+    font-family: 'Do Hyeon', sans-serif;
+    box-shadow: 2px 2px 2px black;
+    transition-duration: 0.3s;
+}
+button:active{
+    margin-left: 5px;
+    margin-top: 5px;
+    box-shadow: none;
+}
+.controller{
+    position: absolute;
+    top: 79vh;
+    text-align: center;
+}
+
+#left-key{
+    position: absolute;
+    left: 50px;
+    background-color: #F14A16;
+    font-size: 55px;
+}
+#right-key{
+    position: absolute;
+    left: 237.5px;
+    background-color: #F14A16;
+    font-size: 55px;
+}
+#down-key{
+    position: absolute;
+    left: 425px;
+    background-color: #F14A16;
+    font-size: 55px;
+}
+#up-key{
+    position: absolute;
+    left: 612.5px;
+    background-color: #FC9918;
+
+}
+#space{
+    position: absolute;
+    left: 800px;
+    background-color: #FC9918;
+
+}
+.container{
+    display: flex;
+
+}
+body{
+    width: 1000px;
+    margin: auto;
+    background-color: #35589A;
+
+}
+#level-display{
+    margin-top: 100px;
+    color: white;
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 80px;
+}
+#combo-display{
+    font-size: 70px;
+    font-family: 'Ubuntu Mono', monospace;
+
+}
+#initial{
+    margin-top: 500px;
+    font-size: 30px;
+    font-family: 'Ubuntu Mono', monospace;
+}
+.item{
+    margin: 50px 80px 0px 50px;
+}
+@media(max-width: 600px){
+    table{
+        width: 60vh;
+        height: 120vh;
+    }
+    .controller{
+        top: 155vh;
+    }
 }

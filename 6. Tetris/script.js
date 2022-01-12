@@ -219,42 +219,44 @@ setInterval(function () {
         for(let j = 0; j < 4; j++){
             // x값이 일치하는 좌표 찾기
             if(mino.position[p][i][0] === mino.position[p][j][0]){
-                // y값들을 배열에 넣으면서 max값 찾기
+                // y값들을 배열에 넣으면서 max, min값 구하기
                 mino_y.push(mino.position[p][j][1]);
                 max_y = Math.max.apply(null, mino_y);
                 min_y = Math.min.apply(null, mino_y);
             }
-
         }
 
         for(let j = 0; j < 4; j++){
-            // x값이 일치하는 좌표 찾기
+            // y값이 일치하는 좌표 찾기
             if(mino.position[p][i][1] === mino.position[p][j][1]){
-                // y값들을 배열에 넣으면서 max값 찾기
+                // x값들을 배열에 넣으면서 max, min값 구하기
                 mino_x.push(mino.position[p][j][0]);
                 max_x = Math.max.apply(null, mino_x);
                 min_x = Math.min.apply(null, mino_x);
             }
-
         }
+
         let column = [];
 
+        // 미노의 x값에 해당하는 필드의 모든 y값 중 블록이 존재하는 위치값 찾기
         for(let j = 0; j < 20; j++){
             if(blockSave[j*10 + mino.position[p][i][0]] !== ''){
                 column.push(j);
             }
         }
+        // 가장 미노와 가까운 위치 구하기
         target = Math.min.apply(null, column);
-        
+        // 최초 실행 시
         if(target === Infinity){
             target = 20
         }
+        // 미노와 하단 블록 과의 거리 구하기
         targetArr.push(target - max_y - 2);
-        jump = Math.min.apply(null, targetArr);        
+        jump = Math.min.apply(null, targetArr);
         sessionStorage.setItem('jump', jump);
 
 
-         // 필드 영역 벗어 나면 Lock 활성화
+        // 필드 영역 벗어 나면 Lock 활성화
         if(min_x <= 0 || table.rows[mino.position[p][i][1]].cells[min_x - 1].style.backgroundColor !== ''){
             sessionStorage.setItem('leftLock', 1);
         }
@@ -267,15 +269,16 @@ setInterval(function () {
             sessionStorage.setItem('downLock', 1);
         }
 
-        // 도형에서 각 x값마다 가장 큰 y값을 가지고 한 칸 앞에 주어진 셀의 색상 판별
+        // 미노가 쌓일 때
         if(max_y >= 19 || table.rows[max_y + 1].cells[mino.position[p][i][0]].style.backgroundColor !== ''){
+            // 미노가 최상단에 닿을 때
             if(min_y <= 0){
                 blockSave = [];
                 for(let tr = 0; tr < 20; tr++){
                     for(let td = 0; td < 10; td++){
                         blockSave.push('');
                     }
-                } 
+                }
                 sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
                 sessionStorage.setItem('p', 0);
                 sessionStorage.setItem('combo', 0);
@@ -284,6 +287,7 @@ setInterval(function () {
                 break;
             }
             else{
+                // 배열에 현재 필드의 블록 정보를 저장
                 blockSave = [];
                 for(let tr = 0; tr < 20; tr++){
                     count = 0;
@@ -293,8 +297,11 @@ setInterval(function () {
                             count++;
                         }
                     }
+                    // 한 줄에 블록이 10개 있을 때
                     if(count === 10){
+                        // 해당 줄을 배열에서 제거
                         blockSave.splice(tr*10, 10);
+                        // 맨 앞에 한 줄 추가
                         for(let k = 0; k < 10; k++){
                             blockSave.unshift('');
                         }
@@ -303,10 +310,11 @@ setInterval(function () {
                                 blockSave.push(table.rows[l].cells[m].style.backgroundColor);
                             }
                         }
+                        // 콤보 +1
                         sessionStorage.setItem('combo', combo + 1);
                         location.reload();
                     }
-                    
+
                 }
                 sessionStorage.setItem('blockSave', JSON.stringify(blockSave));
                 sessionStorage.setItem('x', 4);

@@ -2,22 +2,30 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, intial-scale=1">
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<script src="script.js" type="text/javascript" defer></script>
 		<title>Tetris</title>
 	</head>
 	<body>
-		<div class="container">
-			<div class="item">
+		<div class='container'>
+			<div class='item'>
 				<table></table>
 			</div>
-			<button id = 'left-key'>왼쪽</button>
-			<button id = 'right-key'>오른쪽</button>
-			<button id = 'down-key'>아래</button>
-			<button id = 'up-key'>회전</button>
-			<button id = 'space'>낙하</button>
-			<p id = combo-display></p>
-			<p id = level-display></p>
+			<div class='display'>
+				<p id = level-display></p>
+				<p id = combo-display></p>
+				<p id = initial>MADE BY CHANGYUN</p>
+			</div>
+		</div>
+		<div class='bottom'>
+			<div class='controller'>
+				<button id = 'left-key'>←</button>
+				<button id = 'right-key'>→</button>
+				<button id = 'down-key'>↓</button>
+				<button id = 'up-key'>회전</button>
+				<button id = 'space'>낙하</button>
+			</div>
 		</div>
     </body>
 </html>
